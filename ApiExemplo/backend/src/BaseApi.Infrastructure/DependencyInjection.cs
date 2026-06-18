@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BaseApi.Domain.Repositories;
 
 namespace BaseApi.Infrastructure;
 
@@ -35,6 +36,7 @@ public static class DependencyInjection
         services.AddScoped<ITokenServico, TokenServico>();
         services.AddScoped<IEmailServico, EmailServico>();
         services.AddScoped<ISenhaServico, SenhaServico>();
+        services.AddScoped<ICaixaStatusRepositorio, CaixaStatusRepositorio>();
 
         return services;
     }
