@@ -1,0 +1,24 @@
+﻿using BaseApi.Domain.Entidades;
+using BaseApi.Domain.Interfaces.Repositorios;
+using BaseApi.Infrastructure.Dados;
+using Microsoft.EntityFrameworkCore;
+
+namespace BaseApi.Infrastructure.Repositorios;
+
+public class CarrinhoRepositorio(AppDbContext contexto) : ICarrinhoRepositorio
+{
+    public async Task<Carrinho?> ObterAtivoPorUsuarioIdAsync(Guid usuarioId, CancellationToken ct = default)
+        => await contexto.Set<Carrinho>()
+            .Include(c => c.Itens)
+                .ThenInclude(i => i.Produto) // Garante o carregamento do produto (ImagemUrl e Tipo)
+            .FirstOrDefaultAsync(c => c.UsuarioId == usuarioId && c.Status == "ATIVO", ct);
+
+    public async Task AdicionarAsync(Carrinho carrinho, CancellationToken ct = default)
+        => await contexto.Set<Carrinho>().AddAsync(carrinho, ct);
+
+    public void Atualizar(Carrinho carrinho)
+        => contexto.Set<Carrinho>().Update(carrinho);
+
+    public async Task SalvarAsync(CancellationToken ct = default)
+        => await contexto.SaveChangesAsync(ct);
+}
