@@ -13,6 +13,7 @@ public record ProdutoDetalheDto(
     Guid Id,
     string Nome,
     decimal Preco,
+    string Categoria,
     DateTime CriadoEm,
     DateTime AtualizadoEm
 );

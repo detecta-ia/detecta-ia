@@ -17,7 +17,7 @@ public class ListarProdutosHandler(IProdutoRepositorio repositorio) : IRequestHa
         var (itens, total) = await repositorio.ListarAsync(query.Pagina, query.TamanhoPagina, query.Busca, ct);
         return new ResultadoPaginado<ProdutoListaDto>
         {
-            Itens = itens.Select(p => new ProdutoListaDto(p.Id, p.Nome, p.Preco)).ToList(),
+            Itens = itens.Select(p => new ProdutoListaDto(p.Id, p.Nome, p.Preco, p.Categoria)).ToList(),
             Total = total,
             Pagina = query.Pagina,
             TamanhoPagina = query.TamanhoPagina

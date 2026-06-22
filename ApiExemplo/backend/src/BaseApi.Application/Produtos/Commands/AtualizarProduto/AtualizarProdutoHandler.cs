@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BaseApi.Application.Produtos.Commands.AtualizarProduto
 {
-    public class AtualizarProdutoHandler : IRequest<Unit>
+    public class AtualizarProdutoHandler : IRequestHandler<AtualizarProdutoCommand, Unit>
     {
         private readonly IProdutoRepositorio _repositorio;
 
@@ -20,6 +20,7 @@ namespace BaseApi.Application.Produtos.Commands.AtualizarProduto
             var produto = await _repositorio.ObterPorIdAsync(command.Id, ct)
                 ?? throw new Exception($"Produto com Id '{command.Id}' não encontrado.");
 
+            produto.Id = command.Id;
             produto.Nome = command.Nome;
             produto.Categoria = command.Categoria;
             produto.Preco = command.Preco;
