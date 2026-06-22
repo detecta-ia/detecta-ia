@@ -22,159 +22,235 @@ namespace BaseApi.Infrastructure.Dados.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("BaseApi.Domain.Entidades.Carrinho", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("char(36)");
+
+                b.Property<DateTime?>("AtualizadoEm")
+                    .HasColumnType("datetime(6)");
+
+                b.Property<DateTime>("CriadoEm")
+                    .HasColumnType("datetime(6)");
+
+                b.Property<string>("Status")
+                    .IsRequired()
+                    .HasColumnType("longtext");
+
+                b.Property<Guid>("UsuarioId")
+                    .HasColumnType("char(36)");
+
+                b.HasKey("Id");
+
+                b.ToTable("Carrinhos", (string)null);
+            });
+
+            modelBuilder.Entity("BaseApi.Domain.Entidades.CarrinhoItem", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("char(36)");
+
+                b.Property<Guid>("CarrinhoId")
+                    .HasColumnType("char(36)");
+
+                b.Property<int>("PrecoUnitarioCents")
+                    .HasColumnType("int");
+
+                b.Property<Guid>("ProdutoId")
+                    .HasColumnType("char(36)");
+
+                b.Property<int>("Quantidade")
+                    .HasColumnType("int");
+
+                b.HasKey("Id");
+
+                b.HasIndex("CarrinhoId");
+
+                b.HasIndex("ProdutoId");
+
+                b.ToTable("CarrinhoItens", (string)null);
+            });
+
             modelBuilder.Entity("BaseApi.Domain.Entidades.Perfil", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
+                b.Property<string>("Descricao")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("varchar(200)");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                b.Property<string>("Nome")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar(50)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Nome")
-                        .IsUnique();
+                b.HasIndex("Nome")
+                    .IsUnique();
 
-                    b.ToTable("perfis", (string)null);
+                b.ToTable("perfis", (string)null);
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Descricao = "Acesso total ao sistema",
-                            Nome = "Admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Descricao = "Acesso intermediário ao sistema",
-                            Nome = "Gerente"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Descricao = "Acesso básico ao sistema",
-                            Nome = "Usuário"
-                        });
-                });
+                b.HasData(
+                    new
+                    {
+                        Id = 1,
+                        Descricao = "Acesso total ao sistema",
+                        Nome = "Admin"
+                    },
+                    new
+                    {
+                        Id = 2,
+                        Descricao = "Acesso intermediário ao sistema",
+                        Nome = "Gerente"
+                    },
+                    new
+                    {
+                        Id = 3,
+                        Descricao = "Acesso básico ao sistema",
+                        Nome = "Usuário"
+                    });
+            });
 
             modelBuilder.Entity("BaseApi.Domain.Entidades.Produto", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("AtualizadoEm")
-                        .HasColumnType("datetime(6)");
+                b.Property<DateTime>("AtualizadoEm")
+                    .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Categoria")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                b.Property<string>("Categoria")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("varchar(100)");
 
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("datetime(6)");
+                b.Property<DateTime>("CriadoEm")
+                    .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                b.Property<string>("ImagemUrl")
+                    .HasColumnType("longtext");
 
-                    b.Property<decimal>("Preco")
-                        .HasColumnType("decimal(18,2)");
+                b.Property<string>("Nome")
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .HasColumnType("varchar(150)");
 
-                    b.HasKey("Id");
+                b.Property<decimal>("Preco")
+                    .HasColumnType("decimal(18,2)");
 
-                    b.ToTable("produtos", (string)null);
-                });
+                b.HasKey("Id");
 
-            modelBuilder.Entity("BaseApi.Domain.Entidades.Usuario", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTime>("AtualizadoEm")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("NomeCompleto")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<int>("PerfilId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SenhaHash")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("TokenExpiracao")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("TokenRedefinicaoSenha")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("PerfilId");
-
-                    b.ToTable("usuarios", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("00000000-0000-0000-0000-000000000001"),
-                            Ativo = true,
-                            AtualizadoEm = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CriadoEm = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "admin@baseapi.com",
-                            NomeCompleto = "Administrador do Sistema",
-                            PerfilId = 1,
-                            SenhaHash = "$2a$11$80gAvyEMTUnnd9w2CuX0Vu0Gs4mXl6oqYktD6BFWatS9Z/WZRk6DS"
-                        });
-                });
+                b.ToTable("produtos", (string)null);
+            });
 
             modelBuilder.Entity("BaseApi.Domain.Entidades.Usuario", b =>
-                {
-                    b.HasOne("BaseApi.Domain.Entidades.Perfil", "Perfil")
-                        .WithMany("Usuarios")
-                        .HasForeignKey("PerfilId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("char(36)");
 
-                    b.Navigation("Perfil");
-                });
+                b.Property<bool>("Ativo")
+                    .HasColumnType("tinyint(1)");
+
+                b.Property<DateTime>("AtualizadoEm")
+                    .HasColumnType("datetime(6)");
+
+                b.Property<DateTime>("CriadoEm")
+                    .HasColumnType("datetime(6)");
+
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("varchar(200)");
+
+                b.Property<string>("NomeCompleto")
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .HasColumnType("varchar(150)");
+
+                b.Property<int>("PerfilId")
+                    .HasColumnType("int");
+
+                b.Property<string>("SenhaHash")
+                    .IsRequired()
+                    .HasColumnType("longtext");
+
+                b.Property<DateTime?>("TokenExpiracao")
+                    .HasColumnType("datetime(6)");
+
+                b.Property<string>("TokenRedefinicaoSenha")
+                    .HasMaxLength(100)
+                    .HasColumnType("varchar(100)");
+
+                b.HasKey("Id");
+
+                b.HasIndex("Email")
+                    .IsUnique();
+
+                b.HasIndex("PerfilId");
+
+                b.ToTable("usuarios", (string)null);
+
+                b.HasData(
+                    new
+                    {
+                        Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                        Ativo = true,
+                        AtualizadoEm = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        CriadoEm = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        Email = "admin@baseapi.com",
+                        NomeCompleto = "Administrador do Sistema",
+                        PerfilId = 1,
+                        SenhaHash = "$2a$11$De/pVb9fR7a8m9EPOvtAcu.cNADBxHWb1YVGYxLvR/uXKa1coSHyW"
+                    });
+            });
+
+            modelBuilder.Entity("BaseApi.Domain.Entidades.CarrinhoItem", b =>
+            {
+                b.HasOne("BaseApi.Domain.Entidades.Carrinho", null)
+                    .WithMany("Itens")
+                    .HasForeignKey("CarrinhoId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.HasOne("BaseApi.Domain.Entidades.Produto", "Produto")
+                    .WithMany()
+                    .HasForeignKey("ProdutoId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+
+                b.Navigation("Produto");
+            });
+
+            modelBuilder.Entity("BaseApi.Domain.Entidades.Usuario", b =>
+            {
+                b.HasOne("BaseApi.Domain.Entidades.Perfil", "Perfil")
+                    .WithMany("Usuarios")
+                    .HasForeignKey("PerfilId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+
+                b.Navigation("Perfil");
+            });
+
+            modelBuilder.Entity("BaseApi.Domain.Entidades.Carrinho", b =>
+            {
+                b.Navigation("Itens");
+            });
 
             modelBuilder.Entity("BaseApi.Domain.Entidades.Perfil", b =>
-                {
-                    b.Navigation("Usuarios");
-                });
+            {
+                b.Navigation("Usuarios");
+            });
 #pragma warning restore 612, 618
         }
     }
