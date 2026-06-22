@@ -17,8 +17,9 @@ namespace BaseApi.Application.Produtos.Commands.CriarProduto
             {
                 Nome = request.Nome,
                 Preco = request.Preco,
+                Categoria = request.Categoria,
                 CriadoEm = DateTime.UtcNow,
-                AtualizadoEm = DateTime.UtcNow,
+                AtualizadoEm = DateTime.UtcNow
             };
 
             await repositorio.AdicionarAsync(produto, cancellationToken);
