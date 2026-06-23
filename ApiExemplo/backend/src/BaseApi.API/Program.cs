@@ -96,26 +96,6 @@ builder.Services.AddSwaggerGen(opt =>
 
 var app = builder.Build();
 
-// ================================================================
-// 5. MIGRATION AUTOMÁTICA — aplica ao iniciar a aplicação
-// ================================================================
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-    try
-    {
-        logger.LogInformation("Aplicando migrations...");
-        await db.Database.MigrateAsync();
-        logger.LogInformation("Banco de dados pronto.");
-    }
-    catch (Exception ex)
-    {
-        logger.LogError(ex, "Erro ao aplicar migrations. Verifique a conexão com o MySQL.");
-        throw;
-    }
-}
 
 // ================================================================
 // 6. PIPELINE DE MIDDLEWARES (ordem importa!)

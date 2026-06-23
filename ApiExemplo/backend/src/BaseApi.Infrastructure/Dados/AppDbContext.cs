@@ -9,13 +9,19 @@ namespace BaseApi.Infrastructure.Dados;
 ///
 /// As migrations são criadas pelo CLI do EF e aplicadas automaticamente no startup.
 /// Para criar uma nova migration após alterar entidades:
-///   dotnet ef migrations add NomeDaMigration --project src/BaseApi.Infrastructure --startup-project src/BaseApi.API
+///    dotnet ef migrations add NomeDaMigration --project src/BaseApi.Infrastructure --startup-project src/BaseApi.API
 /// </summary>
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<Perfil> Perfis => Set<Perfil>();
     public DbSet<Produto> Produtos => Set<Produto>();
+
+    // =============================================
+    // NOVAS TABELAS ADICIONADAS PARA A FEATURE 1
+    // =============================================
+    public DbSet<Carrinho> Carrinhos => Set<Carrinho>();
+    public DbSet<CarrinhoItem> CarrinhoItens => Set<CarrinhoItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -34,9 +40,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     private static void SeedPerfis(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Perfil>().HasData(
-            new Perfil { Id = 1, Nome = "Admin",    Descricao = "Acesso total ao sistema" },
-            new Perfil { Id = 2, Nome = "Gerente",  Descricao = "Acesso intermediário ao sistema" },
-            new Perfil { Id = 3, Nome = "Usuário",  Descricao = "Acesso básico ao sistema" }
+            new Perfil { Id = 1, Nome = "Admin", Descricao = "Acesso total ao sistema" },
+            new Perfil { Id = 2, Nome = "Gerente", Descricao = "Acesso intermediário ao sistema" },
+            new Perfil { Id = 3, Nome = "Usuário", Descricao = "Acesso básico ao sistema" }
         );
     }
 
