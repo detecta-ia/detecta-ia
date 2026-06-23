@@ -17,5 +17,6 @@ public record ListarProdutosQuery(
 public record ProdutoListaDto(
     Guid Id,
     string Nome,
-    decimal Preco
+    decimal Preco,
+    string Categoria
 );

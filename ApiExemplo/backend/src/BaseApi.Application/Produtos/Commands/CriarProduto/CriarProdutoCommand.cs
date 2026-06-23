@@ -10,13 +10,15 @@ namespace BaseApi.Application.Produtos.Commands.CriarProduto
     public record CriarProdutoCommand
         (
         string Nome,
-        decimal Preco
+        decimal Preco,
+        string Categoria
     ) : IRequest<CriarProdutoResposta>;
 
     public record CriarProdutoResposta(
         Guid Id,
         string Nome,
-        decimal Preco
+        decimal Preco,
+        string Categoria
 
     );
 }

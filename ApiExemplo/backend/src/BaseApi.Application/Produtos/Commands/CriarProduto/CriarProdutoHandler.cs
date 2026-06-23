@@ -17,14 +17,15 @@ namespace BaseApi.Application.Produtos.Commands.CriarProduto
             {
                 Nome = request.Nome,
                 Preco = request.Preco,
+                Categoria = request.Categoria,
                 CriadoEm = DateTime.UtcNow,
-                AtualizadoEm = DateTime.UtcNow,
+                AtualizadoEm = DateTime.UtcNow
             };
 
             await repositorio.AdicionarAsync(produto, cancellationToken);
             await repositorio.SalvarAsync(cancellationToken);
 
-            return new CriarProdutoResposta(produto.Id, produto.Nome, produto.Preco);
+            return new CriarProdutoResposta(produto.Id, produto.Nome, produto.Preco, produto.Categoria);
         }
     }
 }
