@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -11,6 +11,7 @@ namespace BaseApi.Infrastructure.Dados.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // Removemos o comando SQL antigo e criamos a tabela do zero de forma limpa
             migrationBuilder.CreateTable(
                 name: "produtos",
                 columns: table => new
@@ -22,7 +23,11 @@ namespace BaseApi.Infrastructure.Dados.Migrations
                     Categoria = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+
+                    // DEIXAMOS APENAS O BASE64 COMO TEXTO LONGO:
+                    ImagemBase64 = table.Column<string>(type: "longtext", nullable: true)
+    .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {

@@ -1,0 +1,20 @@
+<div 
+  class="caixa-container"
+  [class.identificando]="status === 'identificando'"
+  [class.confirmado]="status === 'confirmado'"
+  [ngStyle]="{
+    'top.%': caixa.topo,
+    'left.%': caixa.esquerda,
+    'width.%': caixa.largura,
+    'height.%': caixa.altura
+  }"
+>
+  <!-- Borda da caixa -->
+  <div class="moldura-caixa"></div>
+
+  <!-- Rótulo flutuante -->
+  <div class="rotulo-flutuante">
+    <span class="ponto-status"></span>
+    <span class="texto-rotulo">{{ rotulo }}</span>
+  </div>
+</div>

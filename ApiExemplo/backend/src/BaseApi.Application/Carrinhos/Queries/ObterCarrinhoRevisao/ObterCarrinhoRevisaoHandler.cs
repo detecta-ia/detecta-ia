@@ -18,7 +18,6 @@ public class ObterCarrinhoRevisaoHandler(ICarrinhoRepositorio carrinhoRepositori
         foreach (var item in carrinho.Itens)
         {
             string nomeProduto = item.Produto?.Nome ?? "Produto Identificado";
-            string imagemUrl = item.Produto?.ImagemUrl ?? "https://cdn.scaniq.com/placeholder.png";
 
             int subtotalItemCents = item.Quantidade * item.PrecoUnitarioCents;
             totalGeralCents += subtotalItemCents;
@@ -29,8 +28,7 @@ public class ObterCarrinhoRevisaoHandler(ICarrinhoRepositorio carrinhoRepositori
                 nomeProduto,
                 item.Quantidade,
                 (decimal)item.PrecoUnitarioCents / 100,
-                (decimal)subtotalItemCents / 100,
-                imagemUrl
+                (decimal)subtotalItemCents / 100
             ));
         }
 

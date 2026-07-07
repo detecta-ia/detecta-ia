@@ -1,0 +1,178 @@
+.carrinho-container {
+  width: 340px;
+  background-color: var(--bg-card);
+  border-left: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 70px);
+  padding: 24px;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding: 16px;
+  }
+
+  .carrinho-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .titulo-secao {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+    }
+
+    .emblema-contagem {
+      background-color: #EEF2FF;
+      color: var(--brand-primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+    }
+  }
+
+  .carrinho-itens-lista {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-right: 4px;
+
+    /* Custom Scrollbar */
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--border-subtle);
+      border-radius: 2px;
+    }
+
+    .item-lista {
+      width: 100%;
+    }
+
+    .estado-vazio {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-secondary);
+      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+
+      .icone-vazio {
+        margin-bottom: 12px;
+        opacity: 0.5;
+        stroke: var(--text-secondary);
+      }
+
+      .mensagem-vazia {
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: var(--text-primary);
+      }
+
+      .submensagem-vazia {
+        font-size: 10px;
+        color: var(--text-secondary);
+      }
+    }
+  }
+
+  .bloco-total {
+    background-color: var(--total-bg);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 1px solid rgba(67, 56, 202, 0.1);
+
+    .total-rotulo {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+      letter-spacing: 0.5px;
+    }
+
+    .total-valor {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--brand-primary);
+      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+    }
+  }
+
+  .carrinho-acoes {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 40px;
+
+    button {
+      flex: 1;
+      height: 48px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+
+    .botao-limpar {
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+
+      &:hover:not(:disabled) {
+        background-color: #F9FAFB;
+        border-color: #9CA3AF;
+      }
+    }
+
+    .botao-finalizar {
+      background-color: var(--accent-cta);
+      border: none;
+      color: #FFFFFF;
+
+      &:hover:not(:disabled) {
+        background-color: #044E39;
+        box-shadow: 0 4px 12px rgba(6, 95, 70, 0.25);
+      }
+    }
+  }
+}

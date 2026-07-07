@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +14,6 @@ namespace BaseApi.Domain.Entidades
         public string Categoria { get; set; }
         public DateTime CriadoEm { get; set; } = DateTime.UtcNow;
         public DateTime AtualizadoEm { get; set; } = DateTime.UtcNow;
-        public string? ImagemUrl { get; set; }
+        public string? ImagemBase64 { get; set; }
     }
 }

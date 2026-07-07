@@ -1,0 +1,12 @@
+<div class="item-carrinho-container">
+  <div class="dados-produto">
+    <img [src]="item.urlMiniatura" alt="{{ item.nome }}" class="miniatura-produto" />
+    <div class="textos-produto">
+      <span class="nome-produto">{{ item.nome }}</span>
+      <span class="sku-produto">SKU: {{ item.sku }}</span>
+    </div>
+  </div>
+  <div class="preco-produto">
+    R$ {{ item.preco.toFixed(2).replace('.', ',') }}
+  </div>
+</div>
