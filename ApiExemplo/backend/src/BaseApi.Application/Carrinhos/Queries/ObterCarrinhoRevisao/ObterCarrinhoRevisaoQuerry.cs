@@ -21,5 +21,6 @@ public record ItemRevisaoDto(
     string Nome,
     int Quantidade,
     decimal PrecoUnitario,
-    decimal Subtotal
+    decimal Subtotal, // Atende ao critério de exibição do subtotal da linha
+    string ImagemUrl // [RN02] Imagem do produto vinda do banco
 );

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -11,7 +11,6 @@ namespace BaseApi.Infrastructure.Dados.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-migrationBuilder.Sql("DROP TABLE IF EXISTS `Carrinhos`;");
             migrationBuilder.CreateTable(
                 name: "Carrinhos",
                 columns: table => new
@@ -29,7 +28,26 @@ migrationBuilder.Sql("DROP TABLE IF EXISTS `Carrinhos`;");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            // Duplicate produtos table creation removed; handled by separate migration.
+            migrationBuilder.CreateTable(
+                name: "produtos",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Categoria = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ImagemUrl = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_produtos", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "CarrinhoItens",
@@ -86,7 +104,8 @@ migrationBuilder.Sql("DROP TABLE IF EXISTS `Carrinhos`;");
             migrationBuilder.DropTable(
                 name: "Carrinhos");
 
-            // Drop of duplicate produtos table removed.
+            migrationBuilder.DropTable(
+                name: "produtos");
 
             migrationBuilder.UpdateData(
                 table: "usuarios",

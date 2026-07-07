@@ -107,16 +107,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         logger.LogInformation("Aplicando migrations...");
-        var pending = db.Database.GetPendingMigrations();
-        if (pending.Any())
-        {
-            db.Database.Migrate();
-            logger.LogInformation("Migrations aplicadas com sucesso.");
-        }
-        else
-        {
-            logger.LogInformation("Nenhuma migration pendente. Banco já está atualizado.");
-        }
+        await db.Database.MigrateAsync();
         logger.LogInformation("Banco de dados pronto.");
     }
     catch (Exception ex)

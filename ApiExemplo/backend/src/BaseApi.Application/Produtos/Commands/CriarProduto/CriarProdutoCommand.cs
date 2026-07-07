@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +11,7 @@ namespace BaseApi.Application.Produtos.Commands.CriarProduto
         (
         string Nome,
         decimal Preco,
-        string Categoria,
-        string? ImagemBase64 = null
+        string Categoria
     ) : IRequest<CriarProdutoResposta>;
 
     public record CriarProdutoResposta(
