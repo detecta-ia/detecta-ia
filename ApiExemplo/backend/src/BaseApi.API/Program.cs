@@ -96,9 +96,8 @@ builder.Services.AddSwaggerGen(opt =>
 
 var app = builder.Build();
 
-
 // ================================================================
-// 6. PIPELINE DE MIDDLEWARES (ordem importa!)
+// 5. PIPELINE DE MIDDLEWARES (ordem importa!)
 // ================================================================
 app.UseMiddleware<ExcecaoMiddleware>(); // Sempre primeiro
 
@@ -109,9 +108,9 @@ app.UseSwaggerUI(opt =>
     opt.RoutePrefix = "swagger";
 });
 
-app.UseCors("PermitirTudo");
+app.UseCors("PermitirTudo"); // Aplica o CORS configurado
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-app.Run();
+app.Run(); // Inicia a aplicação
