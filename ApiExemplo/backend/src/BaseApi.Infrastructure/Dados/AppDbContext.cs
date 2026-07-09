@@ -16,6 +16,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<Perfil> Perfis => Set<Perfil>();
     public DbSet<Produto> Produtos => Set<Produto>();
+    public DbSet<HistoricoCompra> HistoricoCompras { get; set; }
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

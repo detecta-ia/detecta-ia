@@ -32,11 +32,16 @@ public static class DependencyInjection
         services.AddScoped<IPerfilRepositorio, PerfilRepositorio>();
         services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
         services.AddScoped<ICarrinhoRepositorio, CarrinhoRepositorio>();
+        services.AddScoped<IHistoricoCompraRepositorio, HistoricoCompraRepository>();
 
         // Serviços de infraestrutura
         services.AddScoped<ITokenServico, TokenServico>();
+
         services.AddScoped<IEmailServico, EmailServico>();
         services.AddScoped<ISenhaServico, SenhaServico>();
+        services.AddScoped<
+     IHistoricoCompraRepositorio,
+       HistoricoCompraRepository>();
 
         return services;
     }

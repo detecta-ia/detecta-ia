@@ -95,6 +95,9 @@ builder.Services.AddSwaggerGen(opt =>
 });
 
 var app = builder.Build();
+var connection = builder.Configuration.GetConnectionString("MySQL");
+
+Console.WriteLine($"Connection String: {connection}");
 
 // ================================================================
 // 5. MIGRATION AUTOMÁTICA — aplica ao iniciar a aplicação
