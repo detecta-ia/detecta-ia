@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  // Cores
+  --bg-app: #0B0F19;
+  --bg-card: #FFFFFF;
+  --bg-sidebar-hover: #EEF2FF;
+  --brand-primary: #4338CA;
+  --accent-success: #10B981;
+  --accent-cta: #065F46;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --border-subtle: #E5E7EB;
+  --overlay-bbox: #6366F1;
+  --total-bg: #EEF2FF;
+}
+
+// Reset e Base
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: "JetBrains Mono", "Roboto Mono", monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Tipografia global
+h1, h2, h3, h4, h5, h6, span, p, button, input {
+  font-family: "JetBrains Mono", "Roboto Mono", monospace;
+}
+
+button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}

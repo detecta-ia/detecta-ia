@@ -1,0 +1,56 @@
+.item-carrinho-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-sizing: border-box;
+  font-family: "JetBrains Mono", "Roboto Mono", monospace;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(67, 56, 202, 0.05);
+    border-color: rgba(67, 56, 202, 0.2);
+  }
+
+  .dados-produto {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .miniatura-produto {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--border-subtle);
+      background-color: #F9FAFB;
+    }
+
+    .textos-produto {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .nome-produto {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .sku-produto {
+        font-size: 10px;
+        color: var(--text-secondary);
+      }
+    }
+  }
+
+  .preco-produto {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--brand-primary);
+    white-space: nowrap;
+  }
+}

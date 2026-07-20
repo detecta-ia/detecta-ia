@@ -16,6 +16,9 @@ namespace BaseApi.Application.Produtos.Commands.CriarProduto
                 .MaximumLength(100).WithMessage("Nome do produto deve ter no máximo 100 caracteres.");
             RuleFor(x => x.Preco)
                 .GreaterThan(0).WithMessage("Preço do produto deve ser maior que zero.");
+            RuleFor(x => x.Categoria)
+                .NotEmpty().WithMessage("Categoria do produto é obrigatória.")
+                .MaximumLength(50).WithMessage("Categoria do produto deve ter no máximo 50 caracteres.");
         }
     }
 }

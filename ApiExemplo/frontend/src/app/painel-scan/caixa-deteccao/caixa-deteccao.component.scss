@@ -1,0 +1,104 @@
+.caixa-container {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.15s linear;
+
+  .moldura-caixa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2.5px solid var(--overlay-bbox);
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+
+  .rotulo-flutuante {
+    position: absolute;
+    top: -28px;
+    left: 0;
+    background-color: var(--overlay-bbox);
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    font-family: "JetBrains Mono", "Roboto Mono", monospace;
+    letter-spacing: 0.2px;
+
+    .ponto-status {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #FFFFFF;
+    }
+  }
+
+  /* Estados */
+  &.identificando {
+    .moldura-caixa {
+      border-color: #3B82F6;
+      border-style: dashed;
+      background-color: rgba(59, 130, 246, 0.05);
+      animation: borda-pulsando 1.5s infinite ease-in-out;
+    }
+
+    .rotulo-flutuante {
+      background-color: #3B82F6;
+
+      .ponto-status {
+        background-color: #FFFFFF;
+        animation: ponto-piscando 1s infinite alternate;
+      }
+    }
+  }
+
+  &.confirmado {
+    .moldura-caixa {
+      border-color: var(--overlay-bbox);
+      background-color: rgba(99, 102, 241, 0.08);
+      box-shadow: inset 0 0 10px rgba(99, 102, 241, 0.2);
+    }
+
+    .rotulo-flutuante {
+      background-color: var(--overlay-bbox);
+
+      .ponto-status {
+        background-color: var(--accent-success);
+      }
+    }
+  }
+}
+
+@keyframes borda-pulsando {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes ponto-piscando {
+  from {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
