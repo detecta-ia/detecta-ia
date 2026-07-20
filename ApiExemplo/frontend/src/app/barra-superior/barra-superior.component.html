@@ -1,0 +1,17 @@
+<header class="barra-superior-container">
+  <div class="logo-e-status">
+    <h1 class="titulo-app">Detecta IA</h1>
+    
+    <div class="emblema-status" [class.ativo]="ativo">
+      <span class="ponto-pulsante"></span>
+      <span class="texto-status">
+        {{ ativo ? 'ATIVO - RECONHECIMENTO EM TEMPO REAL' : 'INATIVO - SISTEMA EM PAUSA' }}
+      </span>
+    </div>
+  </div>
+
+  <div class="usuario-perfil">
+    <span class="nome-usuario">{{ nomeUsuario }}</span>
+    <img [src]="urlAvatarUsuario" alt="Avatar do Usuário" class="avatar-usuario" />
+  </div>
+</header>
