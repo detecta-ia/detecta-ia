@@ -23,7 +23,7 @@ public class RespostaApi<T>
 
     public bool Sucesso()
     {
-        throw new NotImplementedException();
+        return Ok;
     }
 }
 

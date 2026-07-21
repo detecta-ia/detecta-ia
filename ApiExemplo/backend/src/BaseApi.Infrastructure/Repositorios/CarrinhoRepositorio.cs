@@ -1,4 +1,4 @@
-﻿using BaseApi.Domain.Entidades;
+using BaseApi.Domain.Entidades;
 using BaseApi.Domain.Interfaces.Repositorios;
 using BaseApi.Infrastructure.Dados;
 using Microsoft.EntityFrameworkCore;
@@ -28,10 +28,5 @@ public class CarrinhoRepositorio(AppDbContext contexto) : ICarrinhoRepositorio
             .Include(c => c.Itens)
                 .ThenInclude(i => i.Produto)
             .FirstOrDefaultAsync(c => c.Id == id, ct);
-    }
-
-    Task ICarrinhoRepositorio.ObterPorIdAsync(Guid carrinhoId, CancellationToken cancellationToken)
-    {
-        return ObterPorIdAsync(carrinhoId, cancellationToken);
     }
 }

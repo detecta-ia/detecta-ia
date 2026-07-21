@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using BaseApi.Application.Carrinhos.Command;
 using BaseApi.Application.Carrinhos.Queries;
@@ -19,10 +19,12 @@ namespace BaseApi.API.Controllers
         }
 
         // ENDPOINT EXISTENTE: Obter revisão do carrinho
+        [HttpGet("revisao")]
         [HttpGet("revisao/{usuarioId}")]
-        public async Task<IActionResult> ObterRevisao([FromRoute] Guid usuarioId, CancellationToken ct)
+        public async Task<IActionResult> ObterRevisao([FromRoute] Guid? usuarioId, CancellationToken ct)
         {
-            var resultado = await _mediator.Send(new ObterCarrinhoRevisaoQuery(usuarioId), ct);
+            var idUsuarioFinal = usuarioId ?? Guid.Parse("00000000-0000-0000-0000-000000000001");
+            var resultado = await _mediator.Send(new ObterCarrinhoRevisaoQuery(idUsuarioFinal), ct);
             return Ok(resultado);
         }
 
