@@ -29,6 +29,14 @@ export class ServicoCatalogoProdutos {
       sku: '11045-G',
       preco: 3.25,
       urlMiniatura: 'assets/imagens/agua.png'
+    },
+    'mouse_computador': {
+      classeId: 3,
+      nomeClasse: 'mouse_computador',
+      nome: 'Mouse de Computador',
+      sku: '55020-M',
+      preco: 49.90,
+      urlMiniatura: 'assets/imagens/mouse.png'
     }
   };
 

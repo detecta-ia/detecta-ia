@@ -21,6 +21,10 @@ app.add_middleware(
 # ultralytics baixa automaticamente na primeira execução
 modelo_yolo = YOLO("yolov8n.pt")
 
+# Carrega o modelo customizado mouse.pt (treinado para detectar mouse de computador)
+modelo_mouse = YOLO("mouse.pt")
+print(f"Modelo mouse.pt carregado com classes: {modelo_mouse.names}")
+
 class EntradaRequisicao(BaseModel):
   imagem: str  # Base64 string do frame
 
@@ -44,13 +48,18 @@ class RespostaDeteccaoApi(BaseModel):
 # - Garrafa (ID 39) -> Água Mineral Gás
 # - Maçã (ID 47) ou Laranja (ID 49) ou Banana (ID 46) -> Mirtilos Orgânicos
 # - Copo (ID 41) ou Livro (ID 73) -> Leite Integral 1L
-MAPEAMENTO_PRODUTOS = {
+MAPEAMENTO_PRODUTOS_COCO = {
     39: {"id_classe": 2, "nome_classe": "agua_mineral_gas"},
     47: {"id_classe": 1, "nome_classe": "mirtilos_organicos"},
     49: {"id_classe": 1, "nome_classe": "mirtilos_organicos"},
     46: {"id_classe": 1, "nome_classe": "mirtilos_organicos"},
     41: {"id_classe": 0, "nome_classe": "leite_integral_1l"},
     73: {"id_classe": 0, "nome_classe": "leite_integral_1l"}
+}
+
+# Mapeamento de classes do modelo mouse.pt customizado
+MAPEAMENTO_PRODUTOS_MOUSE = {
+    0: {"id_classe": 3, "nome_classe": "mouse_computador"}
 }
 
 @app.post("/api/detectar", response_model=RespostaDeteccaoApi)
@@ -64,39 +73,49 @@ async def detectar_objetos(entrada: EntradaRequisicao):
     if imagem is None:
       raise HTTPException(status_code=400, detail="Formato de imagem inválido.")
 
-    # Executa inferência YOLOv8
-    resultados = modelo_yolo(imagem, verbose=False)
+    # Executa inferência com ambos os modelos
+    # Executa inferência com ambos os modelos
+    resultados_coco = modelo_yolo(imagem, verbose=False, conf=0.25)
+    resultados_mouse = modelo_mouse(imagem, verbose=False, conf=0.1)
     deteccoes_filtradas = []
 
     altura_img, largura_img, _ = imagem.shape
 
-    for r in resultados:
-      caixas = r.boxes
-      for caixa in caixas:
-        classe_original = int(caixa.cls[0].item())
-        confianca = float(caixa.conf[0].item())
+    # Função auxiliar para processar resultados de qualquer modelo
+    def processar_resultados(resultados, mapeamento):
+      for r in resultados:
+        caixas = r.boxes
+        for caixa in caixas:
+          classe_original = int(caixa.cls[0].item())
+          confianca = float(caixa.conf[0].item())
 
-        # Verifica se a classe está no nosso mapeamento de teste
-        if classe_original in MAPEAMENTO_PRODUTOS:
-          info_produto = MAPEAMENTO_PRODUTOS[classe_original]
-          
-          # Coordenadas em pixel
-          x1_px, y1_px, x2_px, y2_px = caixa.xyxy[0].tolist()
+          # Verifica se a classe está no mapeamento
+          if classe_original in mapeamento:
+            info_produto = mapeamento[classe_original]
 
-          # Normaliza as coordenadas (0 a 1) para o frontend usar percentual
-          x1 = x1_px / largura_img
-          y1 = y1_px / altura_img
-          x2 = x2_px / largura_img
-          y2 = y2_px / altura_img
+            # Coordenadas em pixel
+            x1_px, y1_px, x2_px, y2_px = caixa.xyxy[0].tolist()
 
-          deteccoes_filtradas.append(
-              ObjetoDetectadoApi(
-                  class_id=info_produto["id_classe"],
-                  class_name=info_produto["nome_classe"],
-                  confidence=confianca,
-                  bbox=CaixaDelimitadora(x1=x1, y1=y1, x2=x2, y2=y2)
-              )
-          )
+            # Normaliza as coordenadas (0 a 1) para o frontend usar percentual
+            x1 = x1_px / largura_img
+            y1 = y1_px / altura_img
+            x2 = x2_px / largura_img
+            y2 = y2_px / altura_img
+
+            deteccoes_filtradas.append(
+                ObjetoDetectadoApi(
+                    class_id=info_produto["id_classe"],
+                    class_name=info_produto["nome_classe"],
+                    confidence=confianca,
+                    bbox=CaixaDelimitadora(x1=x1, y1=y1, x2=x2, y2=y2)
+                )
+            )
+
+    # Processa detecções do modelo COCO (yolov8n.pt)
+    processar_resultados(resultados_coco, MAPEAMENTO_PRODUTOS_COCO)
+
+    # Processa detecções do modelo customizado (mouse.pt)
+    processar_resultados(resultados_mouse, MAPEAMENTO_PRODUTOS_MOUSE)
 
     return RespostaDeteccaoApi(deteccoes=deteccoes_filtradas)
 

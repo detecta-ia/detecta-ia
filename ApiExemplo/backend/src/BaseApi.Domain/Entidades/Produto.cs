@@ -15,5 +15,6 @@ namespace BaseApi.Domain.Entidades
         public DateTime CriadoEm { get; set; } = DateTime.UtcNow;
         public DateTime AtualizadoEm { get; set; } = DateTime.UtcNow;
         public string? ImagemUrl { get; set; }
+        public string? TagIa { get; set; }
     }
 }
