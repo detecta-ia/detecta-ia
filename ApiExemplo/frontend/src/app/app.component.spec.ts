@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'detecta-ia-frontend' title`, () => {
+  it(`should have the 'front-detectaia' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('detecta-ia-frontend');
+    expect(app.title).toEqual('front-detectaia');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, detecta-ia-frontend');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, front-detectaia');
   });
 });

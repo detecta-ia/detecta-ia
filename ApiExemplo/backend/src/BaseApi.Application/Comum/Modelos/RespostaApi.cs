@@ -1,3 +1,4 @@
+
 namespace BaseApi.Application.Comum.Modelos;
 
 /// <summary>
@@ -19,6 +20,11 @@ public class RespostaApi<T>
 
     public static RespostaApi<T> Falha(string mensagem, IEnumerable<string>? erros = null)
         => new() { Ok = false, Mensagem = mensagem, Erros = erros };
+
+    public bool Sucesso()
+    {
+        return Ok;
+    }
 }
 
 // Versão sem dados de retorno (para deletes, por exemplo)
