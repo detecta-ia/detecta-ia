@@ -1,8 +1,3 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ResumoCompraComponent } from './resumo-compra/resumo-compra.component';
-import { PainelPagamentoComponent } from './painel-pagamento/painel-pagamento.component';
-import { CarrinhoService, DadosCarrinho } from './servicos/carrinho.service';
 
 @Component({
   selector: 'app-root',
@@ -129,7 +124,7 @@ export class AppComponent implements OnInit {
       style: 'currency',
       currency: 'BRL',
     }).format(centavos / 100);
-  }
+}
 
   gerarIdTransacao(): string {
     return 'TX-' + (Math.random() * 1000000).toFixed(0);

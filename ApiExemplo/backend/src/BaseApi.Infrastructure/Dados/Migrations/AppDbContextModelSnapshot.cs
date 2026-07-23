@@ -243,7 +243,7 @@ namespace BaseApi.Infrastructure.Dados.Migrations
                             Email = "admin@baseapi.com",
                             NomeCompleto = "Administrador do Sistema",
                             PerfilId = 1,
-                            SenhaHash = "$2a$11$u4WmR5FrxuPYBhHvgxcs.u23g3HniAhkxtr1NkI8/..Fmm9IbhTN6"
+                            SenhaHash = "$2a$11$uwyRiibWO2kMz62HSZIbZ.LeTt5pnjiE8Upqg/RwzhQguO2318euW"
                         });
                 });
 

@@ -9,7 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BaseApi.Domain\BaseApi.Domain.csproj" />
+    <Folder Include="Produtos\Queries\ListarProdutos\" />
+    <Folder Include="Usuarios\Queries\Listagem Paginada\" />
   </ItemGroup>
 
   <PropertyGroup>
