@@ -37,6 +37,14 @@ export class ServicoCatalogoProdutos {
       sku: '55020-M',
       preco: 49.90,
       urlMiniatura: 'assets/imagens/mouse.png'
+    },
+    'pessoa_gabriel': {
+      classeId: 4,
+      nomeClasse: 'pessoa_gabriel',
+      nome: 'Gabriel',
+      sku: '77001-P',
+      preco: 0.00,
+      urlMiniatura: 'assets/imagens/pessoa.png'
     }
   };
 
