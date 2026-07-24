@@ -1,6 +1,0 @@
-names:
-  0: mouse
-nc: 1
-path: C:\Users\Aluno\Downloads\AAAA\ApiExemplo\backend\src\BaseApi.Infrastructure\dataset
-train: train/images
-val: train/images

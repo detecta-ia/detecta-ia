@@ -23,7 +23,7 @@ export class ServicoDeteccao {
   private readonly servicoCatalogo = inject(ServicoCatalogoProdutos);
 
   private readonly URL_API = 'http://localhost:8000/api/detectar';
-  private readonly LIMIAR_CONFIANCA = 0.6;
+  private readonly LIMIAR_CONFIANCA = 0.3;
   private readonly FRAMES_PARA_CONFIRMAR = 5;
 
   private subDeteccoes = new BehaviorSubject<ObjetoDetectado[]>([]);
@@ -160,7 +160,7 @@ export class ServicoDeteccao {
     this.tempoSimulacao++;
 
     const objetos: ObjetoDetectado[] = [];
-    
+
     // Ciclo de simulação baseado no tempoSimulacao (a cada incremento de 1 é 300ms)
     // Duração do ciclo: 40 incrementos (~12 segundos)
     const ciclo = this.tempoSimulacao % 40;
@@ -172,7 +172,7 @@ export class ServicoDeteccao {
       if (produto) {
         const confianca = this.calcularConfiancaSimulada(ciclo, 2, 7);
         const status = confianca >= this.LIMIAR_CONFIANCA ? 'confirmado' : 'identificando';
-        
+
         if (status === 'confirmado' && !this.produtosAdicionadosNoCiclo.has(produto.sku)) {
           this.subProdutoConfirmado.next(produto);
           this.produtosAdicionadosNoCiclo.add(produto.sku);
