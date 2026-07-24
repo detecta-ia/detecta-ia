@@ -8,4 +8,5 @@ public class Carrinho
     public List<CarrinhoItem> Itens { get; set; } = new();
     public DateTime CriadoEm { get; set; } = DateTime.UtcNow;
     public DateTime? AtualizadoEm { get; set; }
+    public int? FormaPagamento { get; set; }
 }

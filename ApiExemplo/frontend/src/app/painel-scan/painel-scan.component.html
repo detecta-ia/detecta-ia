@@ -1,0 +1,36 @@
+<div class="scan-container">
+  <div class="feed-wrapper">
+    <!-- Caixa de vídeo ou imagem fallback -->
+    @if (cameraAtiva) {
+      <video #feedVideo class="feed-elemento" autoplay playsinline muted></video>
+    } @else {
+      <img src="assets/imagens/esteira.png" alt="Esteira do Supermercado (Simulador)" class="feed-elemento fallback-imagem" />
+    }
+
+    <!-- Efeito Laser / Linha de Scan -->
+    <div class="linha-laser"></div>
+
+    <!-- Moldura HUD da Câmera (Quatro Cantos em L) -->
+    <div class="hud-canto canto-sup-esq"></div>
+    <div class="hud-canto canto-sup-dir"></div>
+    <div class="hud-canto canto-inf-esq"></div>
+    <div class="hud-canto canto-inf-dir"></div>
+
+    <!-- Indicador de Status do Feed -->
+    <div class="indicador-feed" [class.simulando]="!cameraAtiva">
+      <span class="ponto-indicador"></span>
+      <span class="texto-indicador">
+        {{ cameraAtiva ? 'FEED DE CÂMERA REAL' : 'MODO SIMULAÇÃO DE IA' }}
+      </span>
+    </div>
+
+    <!-- Renderização das Caixas de Detecção -->
+    @for (objeto of (deteccoes$ | async); track objeto.id) {
+      <caixa-deteccao
+        [caixa]="objeto.caixa"
+        [rotulo]="objeto.rotulo"
+        [status]="objeto.status"
+      ></caixa-deteccao>
+    }
+  </div>
+</div>

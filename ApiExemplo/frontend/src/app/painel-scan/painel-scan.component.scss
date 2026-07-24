@@ -1,0 +1,141 @@
+.scan-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+
+  .feed-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    aspect-ratio: 1 / 1;
+    background-color: #000000;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-subtle);
+
+    .feed-elemento {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+
+      &.fallback-imagem {
+        filter: brightness(0.8) contrast(1.1);
+      }
+    }
+
+    // Linha de Scan Laser
+    .linha-laser {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(to right, rgba(99, 102, 241, 0) 5%, var(--overlay-bbox) 50%, rgba(99, 102, 241, 0) 95%);
+      box-shadow: 0 0 12px var(--overlay-bbox);
+      opacity: 0.8;
+      z-index: 5;
+      pointer-events: none;
+      animation: varredura 3.5s infinite ease-in-out;
+    }
+
+    // HUD Cantos em L
+    .hud-canto {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255, 255, 255, 0.4);
+      z-index: 4;
+      pointer-events: none;
+      border-radius: 2px;
+
+      &.canto-sup-esq {
+        top: 20px;
+        left: 20px;
+        border-right: none;
+        border-bottom: none;
+      }
+      &.canto-sup-dir {
+        top: 20px;
+        right: 20px;
+        border-left: none;
+        border-bottom: none;
+      }
+      &.canto-inf-esq {
+        bottom: 20px;
+        left: 20px;
+        border-right: none;
+        border-top: none;
+      }
+      &.canto-inf-dir {
+        bottom: 20px;
+        right: 20px;
+        border-left: none;
+        border-top: none;
+      }
+    }
+
+    // Indicador de Feed
+    .indicador-feed {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(11, 15, 25, 0.75);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 6;
+      font-size: 10px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.5px;
+      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+
+      .ponto-indicador {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--accent-success);
+        box-shadow: 0 0 8px var(--accent-success);
+      }
+
+      &.simulando {
+        .ponto-indicador {
+          background-color: #3B82F6;
+          box-shadow: 0 0 8px #3B82F6;
+          animation: piscar-azul 1s infinite alternate;
+        }
+      }
+    }
+  }
+}
+
+@keyframes varredura {
+  0% {
+    top: 5%;
+  }
+  50% {
+    top: 95%;
+  }
+  100% {
+    top: 5%;
+  }
+}
+
+@keyframes piscar-azul {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}

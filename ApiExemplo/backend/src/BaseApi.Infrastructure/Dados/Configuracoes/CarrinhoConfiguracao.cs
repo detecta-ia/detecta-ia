@@ -11,6 +11,10 @@ public class CarrinhoConfiguracao : IEntityTypeConfiguration<Carrinho>
         builder.ToTable("Carrinhos");
         builder.HasKey(c => c.Id);
 
+        // Índice de apoio para a listagem de compras por período (filtro por usuário + status + data)
+        builder.HasIndex(c => new { c.UsuarioId, c.Status, c.CriadoEm })
+            .HasDatabaseName("IX_Carrinhos_UsuarioId_Status_CriadoEm");
+
         builder.HasMany(c => c.Itens)
             .WithOne()
             .HasForeignKey(i => i.CarrinhoId)

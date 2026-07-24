@@ -36,12 +36,15 @@ namespace BaseApi.Infrastructure.Dados.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId", "Status", "CriadoEm")
+                        .HasDatabaseName("IX_Carrinhos_UsuarioId_Status_CriadoEm");
 
                     b.ToTable("Carrinhos", (string)null);
                 });
@@ -175,6 +178,9 @@ namespace BaseApi.Infrastructure.Dados.Migrations
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("TagIa")
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id");
 
                     b.ToTable("produtos", (string)null);
@@ -239,6 +245,8 @@ namespace BaseApi.Infrastructure.Dados.Migrations
                             NomeCompleto = "Administrador do Sistema",
                             PerfilId = 1,
                             SenhaHash = "$2a$11$5SM/v5bK5msOMoYKJlEZkeZeSCTfLDEMHnyeiU6ynPjGuA1LZK5ni"
+                            SenhaHash = "$2a$11$I1xE4nCafftsJ6yUeS/vgeaLh1wH1Eu3WLEZi1/KSyC.7SlL00fta"
+                            SenhaHash = "$2a$11$eXErGUY46OjdkOE7Rui10uW5htA2Y8oX/nukfJoKVpB40RkjZ.lkC"
                         });
                 });
 
