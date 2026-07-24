@@ -1,9 +1,14 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using BaseApi.Application.Carrinhos.Queries.ObterCarrinhoRevisao;
+using BaseApi.Application.Carrinhos.Queries.ObterResumoGastos;
 using MediatR;
-using BaseApi.Application.Carrinhos.Command;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+
 using BaseApi.Application.Carrinhos.Queries;
 using BaseApi.Application.Carrinhos.Commands;
-using BaseApi.Application.Carrinhos.Queries.ObterCarrinhoRevisao;
+
 
 namespace BaseApi.API.Controllers
 {
@@ -76,6 +81,25 @@ namespace BaseApi.API.Controllers
         }
     }
 
+    /// <summary>
+    /// GET /api/carrinhos/resumo-gastos
+    /// [RN01] Calcula automaticamente Total Gasto, Número de Compras, Média por Compra
+    /// e Última Compra Realizada a partir das compras (carrinhos finalizados) do usuário.
+    /// [RN02] O cálculo é feito em tempo real, então os indicadores já refletem
+    /// automaticamente qualquer nova compra concluída.
+    /// </summary>
+    [HttpGet("resumo-gastos")]
+    public async Task<IActionResult> ObterResumoGastos(CancellationToken ct)
+    {
+        var usuarioIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (!Guid.TryParse(usuarioIdClaim, out var usuarioId))
+            return BadRequest(new { ok = false, erros = new[] { "Usuário não autenticado." } });
+
+        var resultado = await mediator.Send(new ObterResumoGastosQuery(usuarioId), ct);
+
+        return Ok(new { ok = true, mensagem = "Resumo de gastos carregado.", dados = resultado });
+    }
     // DTO auxiliar para receber os dados estruturados do Webhook do Banco
     public record WebhookPixRequest(string TxId, string Status, decimal Valor);
 }
