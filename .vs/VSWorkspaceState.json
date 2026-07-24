@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\.github",
+    "\\ApiExemplo",
+    "\\ApiExemplo\\backend",
+    "\\ApiExemplo\\backend\\docs",
+    "\\ApiExemplo\\frontend"
   ],
-  "SelectedNode": "\\BaseApi.sln",
+  "SelectedNode": "\\ApiExemplo\\backend\\docs\\01-Guia-Arquitetura.md",
   "PreviewInSolutionExplorer": false
 }

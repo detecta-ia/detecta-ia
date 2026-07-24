@@ -1,4 +1,4 @@
-﻿using BaseApi.Domain.Entidades;
+using BaseApi.Domain.Entidades;
 
 namespace BaseApi.Domain.Interfaces.Repositorios;
 
@@ -24,4 +24,7 @@ public interface ICarrinhoRepositorio
     Task AdicionarAsync(Carrinho carrinho, CancellationToken ct = default);
     void Atualizar(Carrinho carrinho);
     Task SalvarAsync(CancellationToken ct = default);
+    Task<List<Carrinho>> ListarFinalizadasPorUsuarioIdAsync(Guid usuarioId, CancellationToken ct = default);
+
+    Task<Carrinho?> ObterPorIdAsync(Guid carrinhoId, CancellationToken cancellationToken = default);
 }

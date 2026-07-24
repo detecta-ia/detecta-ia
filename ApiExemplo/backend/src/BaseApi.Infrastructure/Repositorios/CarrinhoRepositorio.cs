@@ -1,4 +1,4 @@
-﻿using BaseApi.Domain.Entidades;
+using BaseApi.Domain.Entidades;
 using BaseApi.Domain.Interfaces.Repositorios;
 using BaseApi.Infrastructure.Dados;
 using Microsoft.EntityFrameworkCore;
@@ -49,4 +49,18 @@ public class CarrinhoRepositorio(AppDbContext contexto) : ICarrinhoRepositorio
 
     public async Task SalvarAsync(CancellationToken ct = default)
         => await contexto.SaveChangesAsync(ct);
+
+    public async Task<List<Carrinho>> ListarFinalizadasPorUsuarioIdAsync(Guid usuarioId, CancellationToken ct = default)
+        => await contexto.Set<Carrinho>()
+            .Include(c => c.Itens)
+            .Where(c => c.UsuarioId == usuarioId && c.Status == "FINALIZADO")
+            .OrderByDescending(c => c.AtualizadoEm ?? c.CriadoEm)
+            .ToListAsync(ct);
+    public async Task<Carrinho?> ObterPorIdAsync(Guid id, CancellationToken ct = default)
+    {
+        return await contexto.Set<Carrinho>()
+            .Include(c => c.Itens)
+                .ThenInclude(i => i.Produto)
+            .FirstOrDefaultAsync(c => c.Id == id, ct);
+    }
 }
