@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "detecta-ia-frontend": {
+    "front-detectaia": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/detecta-ia-frontend",
+            "outputPath": "dist/front-detectaia",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -32,7 +32,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -70,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "detecta-ia-frontend:build:production"
+              "buildTarget": "front-detectaia:build:production"
             },
             "development": {
-              "buildTarget": "detecta-ia-frontend:build:development"
+              "buildTarget": "front-detectaia:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -97,7 +97,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
             "scripts": []
           }

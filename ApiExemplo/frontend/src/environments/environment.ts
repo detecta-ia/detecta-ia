@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:7218npm/api' // <-- Ajuste para a porta do seu backend
+  apiUrl: 'https://localhost:7218/api' // <-- Ajuste para a porta do seu backend
 };

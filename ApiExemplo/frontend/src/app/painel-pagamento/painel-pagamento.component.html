@@ -1,0 +1,204 @@
+<div class="flex flex-col h-full gap-6">
+  <!-- Container Principal de Seleção de Pagamento -->
+  <div class="bg-white rounded-2xl border border-slate-100 shadow-md p-6 flex flex-col gap-6">
+    <div>
+      <h2 class="text-lg font-bold text-azul-profundo-escuro">Forma de Pagamento</h2>
+      <p class="text-xs text-slate-400">Selecione uma das opções abaixo para continuar</p>
+    </div>
+
+    <!-- Cards de Métodos de Pagamento -->
+    <div class="grid grid-cols-3 gap-3">
+      <!-- Card PIX -->
+      <button
+        type="button"
+        (click)="selecionarFormaPagamento(1)"
+        [ngClass]="{
+          'bg-blue-50/70 border-blue-500 text-blue-600 shadow-sm shadow-blue-100': formaPagamento === 1,
+          'bg-white border-slate-100 text-slate-500 hover:border-slate-200 hover:bg-slate-50/50': formaPagamento !== 1
+        }"
+        class="flex flex-col items-center justify-center p-4 rounded-xl border-2 cursor-pointer animacao-transicao text-center gap-2"
+      >
+        <div [ngClass]="{'bg-blue-100/60': formaPagamento === 1, 'bg-slate-50': formaPagamento !== 1}" class="p-2 rounded-lg">
+          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 14.625v2.625m3.375-2.625v2.625M16.875 17.25h-3.375m3.375 0h1.125c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-1.125" /></svg>
+        </div>
+        <span class="text-xs font-bold tracking-wide uppercase">PIX</span>
+      </button>
+
+      <!-- Card CARTÃO -->
+      <button
+        type="button"
+        (click)="selecionarFormaPagamento(2)"
+        [ngClass]="{
+          'bg-blue-50/70 border-blue-500 text-blue-600 shadow-sm shadow-blue-100': formaPagamento === 2,
+          'bg-white border-slate-100 text-slate-500 hover:border-slate-200 hover:bg-slate-50/50': formaPagamento !== 2
+        }"
+        class="flex flex-col items-center justify-center p-4 rounded-xl border-2 cursor-pointer animacao-transicao text-center gap-2"
+      >
+        <div [ngClass]="{'bg-blue-100/60': formaPagamento === 2, 'bg-slate-50': formaPagamento !== 2}" class="p-2 rounded-lg">
+          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" /></svg>
+        </div>
+        <span class="text-xs font-bold tracking-wide uppercase">Cartão</span>
+      </button>
+
+      <!-- Card DINHEIRO/CAIXA -->
+      <button
+        type="button"
+        (click)="selecionarFormaPagamento(3)"
+        [ngClass]="{
+          'bg-blue-50/70 border-blue-500 text-blue-600 shadow-sm shadow-blue-100': formaPagamento === 3,
+          'bg-white border-slate-100 text-slate-500 hover:border-slate-200 hover:bg-slate-50/50': formaPagamento !== 3
+        }"
+        class="flex flex-col items-center justify-center p-4 rounded-xl border-2 cursor-pointer animacao-transicao text-center gap-2"
+      >
+        <div [ngClass]="{'bg-blue-100/60': formaPagamento === 3, 'bg-slate-50': formaPagamento !== 3}" class="p-2 rounded-lg">
+          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" /></svg>
+        </div>
+        <span class="text-xs font-bold tracking-wide uppercase">Caixa Físico</span>
+      </button>
+    </div>
+
+    <!-- Área Dinâmica do Método Selecionado -->
+    <div class="min-h-[190px] flex items-center justify-center border border-dashed border-slate-200 rounded-2xl bg-slate-50/40 p-5">
+      <!-- Nenhum selecionado -->
+      <p *ngIf="formaPagamento === null" class="text-sm text-slate-400 text-center font-medium">
+        Por favor, selecione uma forma de pagamento para visualizar os detalhes.
+      </p>
+
+      <!-- PIX -->
+      <div *ngIf="formaPagamento === 1" class="flex flex-col items-center text-center gap-3 w-full">
+        <div class="bg-white p-3.5 rounded-xl border border-slate-100 shadow-sm flex items-center justify-center relative">
+          <svg class="w-28 h-28 text-slate-800" viewBox="0 0 100 100">
+            <rect x="0" y="0" width="25" height="25" fill="currentColor" />
+            <rect x="3" y="3" width="19" height="19" fill="white" />
+            <rect x="7" y="7" width="11" height="11" fill="currentColor" />
+            <rect x="75" y="0" width="25" height="25" fill="currentColor" />
+            <rect x="78" y="3" width="19" height="19" fill="white" />
+            <rect x="82" y="7" width="11" height="11" fill="currentColor" />
+            <rect x="0" y="75" width="25" height="25" fill="currentColor" />
+            <rect x="3" y="78" width="19" height="19" fill="white" />
+            <rect x="7" y="82" width="11" height="11" fill="currentColor" />
+            <rect x="35" y="5" width="5" height="10" fill="currentColor" />
+            <rect x="45" y="0" width="10" height="5" fill="currentColor" />
+            <rect x="60" y="10" width="10" height="10" fill="currentColor" />
+            <rect x="35" y="20" width="15" height="5" fill="currentColor" />
+            <rect x="5" y="35" width="10" height="5" fill="currentColor" />
+            <rect x="20" y="45" width="5" height="15" fill="currentColor" />
+            <rect x="0" y="60" width="15" height="5" fill="currentColor" />
+            <rect x="75" y="35" width="15" height="10" fill="currentColor" />
+            <rect x="90" y="50" width="10" height="5" fill="currentColor" />
+            <rect x="80" y="60" width="5" height="10" fill="currentColor" />
+            <rect x="35" y="35" width="30" height="30" fill="currentColor" />
+            <rect x="40" y="40" width="20" height="20" fill="white" />
+            <circle cx="50" cy="50" r="6" fill="#3B82F6" />
+            <circle cx="50" cy="50" r="3" fill="white" />
+            <rect x="35" y="75" width="10" height="10" fill="currentColor" />
+            <rect x="50" y="85" width="15" height="5" fill="currentColor" />
+            <rect x="70" y="80" width="5" height="15" fill="currentColor" />
+            <rect x="60" y="90" width="10" height="10" fill="currentColor" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-xs text-slate-400">Escaneie o QR Code acima com seu app de banco</p>
+          <div class="flex items-center justify-center gap-1.5 mt-1">
+            <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+            <span class="text-xs font-semibold text-amber-600">
+              {{ tempoRestante > 0 ? 'Tempo restante: ' + formatarTempo(tempoRestante) : 'Código QR Expirado!' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cartão -->
+      <div *ngIf="formaPagamento === 2" class="flex flex-col items-center text-center gap-3 w-full">
+        <div class="p-3 bg-blue-50 text-blue-600 rounded-full">
+          <svg class="w-8 h-8 animate-bounce" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" /></svg>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-slate-700">Aguardando inserção do cartão</h4>
+          <p class="text-xs text-slate-400 mt-1 max-w-[280px]">
+            Insira ou aproxime o seu cartão na maquininha integrada para efetuar o pagamento.
+          </p>
+        </div>
+      </div>
+
+      <!-- Caixa Físico -->
+      <div *ngIf="formaPagamento === 3" class="flex flex-col items-center text-center gap-3 w-full">
+        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-full">
+          <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" /></svg>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-slate-700">Pagamento no Caixa</h4>
+          <p class="text-xs text-slate-400 mt-1 max-w-[280px]">
+            Dirija-se ao caixa físico. Um operador irá receber as cédulas ou moedas para validar a sua compra.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alertas de Erro da API -->
+    <div *ngIf="erroApi" class="p-4 bg-red-50 border border-red-200 rounded-xl flex gap-3 items-start text-red-700">
+      <svg class="w-5 h-5 flex-shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" /></svg>
+      <div class="text-xs">
+        <span class="font-bold">Erro no processamento: </span>
+        {{ erroApi }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Card de Resumo de Valores -->
+  <div class="bg-slate-900 rounded-2xl p-6 text-white shadow-xl flex flex-col gap-4 relative overflow-hidden">
+    <!-- Detalhes de luz de fundo para design premium -->
+    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl"></div>
+    <div class="absolute bottom-0 left-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+
+    <div class="flex flex-col gap-2.5 relative z-10">
+      <div class="flex justify-between items-center text-slate-400 text-sm">
+        <span>Valor da Compra</span>
+        <span class="font-medium text-white">{{ formatarMoeda(subtotal) }}</span>
+      </div>
+      <div class="flex justify-between items-center text-slate-400 text-sm">
+        <span>Taxa de Serviço</span>
+        <span class="font-medium text-white">{{ formatarMoeda(taxaServicoCents) }}</span>
+      </div>
+      <div class="flex justify-between items-center text-slate-400 text-sm">
+        <span>Desconto</span>
+        <span class="font-medium text-emerald-400">-{{ formatarMoeda(descontoCents) }}</span>
+      </div>
+
+      <hr class="border-slate-800 my-1" />
+
+      <div class="flex justify-between items-end">
+        <div class="flex flex-col">
+          <span class="text-xs text-slate-400 uppercase font-semibold tracking-wider">Total a Pagar</span>
+          <span class="text-slate-500 text-[10px]">(Valores convertidos em R$)</span>
+        </div>
+        <span class="text-3xl font-extrabold text-verde-destaque tracking-tight">
+          {{ formatarMoeda(totalAPagar) }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Botão de Ação -->
+    <button
+      id="botao-concluir-pagamento"
+      type="button"
+      [disabled]="formaPagamento === null || processando"
+      (click)="lidarComEnvio()"
+      [ngClass]="{
+        'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700': formaPagamento === null,
+        'bg-emerald-600 text-white cursor-wait opacity-90': processando,
+        'bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg shadow-emerald-950/20 active:scale-[0.98]': formaPagamento !== null && !processando
+      }"
+      class="w-full py-4 px-6 rounded-xl font-bold flex items-center justify-center gap-2.5 animacao-transicao relative z-10"
+    >
+      <ng-container *ngIf="processando">
+        <svg class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" /></svg>
+        <span>Processando pagamento...</span>
+      </ng-container>
+      <ng-container *ngIf="!processando">
+        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+        <span>Concluir Pagamento</span>
+      </ng-container>
+    </button>
+  </div>
+</div>
