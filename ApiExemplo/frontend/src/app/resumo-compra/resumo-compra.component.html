@@ -1,0 +1,102 @@
+<!-- Estado: Carregando -->
+<div *ngIf="carregando" class="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm flex flex-col items-center justify-center min-h-[400px]">
+  <div class="w-12 h-12 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4"></div>
+  <p class="text-slate-500 font-medium animacao-pulso-suave">Carregando itens do carrinho...</p>
+</div>
+
+<!-- Estado: Erro -->
+<div *ngIf="!carregando && erro" class="bg-white rounded-2xl p-8 border border-red-100 shadow-sm flex flex-col items-center justify-center min-h-[400px] text-center">
+  <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4">
+    <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+    </svg>
+  </div>
+  <h3 class="text-lg font-bold text-slate-800 mb-2">Erro ao carregar carrinho</h3>
+  <p class="text-slate-500 text-sm max-w-sm">{{ erro }}</p>
+</div>
+
+<!-- Estado: Itens Carregados -->
+<div *ngIf="!carregando && !erro" id="painel-resumo-compra" class="bg-white rounded-2xl border border-slate-100 shadow-md overflow-hidden flex flex-col h-full">
+  <!-- Cabeçalho do Resumo -->
+  <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="p-2.5 bg-blue-50 text-blue-600 rounded-xl">
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+        </svg>
+      </div>
+      <div>
+        <h2 class="text-lg font-bold text-azul-profundo-escuro">Resumo da Compra</h2>
+        <p class="text-xs text-slate-400">ScanIQ Pro Smart Checkout</p>
+      </div>
+    </div>
+    <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full">
+      {{ obterTotalItens() }} {{ obterTotalItens() === 1 ? 'item' : 'itens' }}
+    </span>
+  </div>
+
+  <!-- Lista de Itens do Carrinho -->
+  <div class="flex-1 overflow-y-auto max-h-[500px] divide-y divide-slate-100">
+    <div *ngIf="itens && itens.length > 0">
+      <div *ngFor="let item of itens" class="p-6 flex gap-4 hover:bg-slate-50/40 animacao-transicao">
+        <!-- Imagem do Produto -->
+        <div class="w-20 h-20 rounded-xl bg-slate-100 overflow-hidden border border-slate-100 flex-shrink-0 flex items-center justify-center">
+          <img
+            [src]="item.imagemUrl"
+            [alt]="item.nome"
+            class="w-full h-full object-cover"
+            (error)="aoErroImagem($event)"
+          />
+        </div>
+
+        <!-- Informações do Produto -->
+        <div class="flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-bold text-azul-profundo-escuro leading-snug line-clamp-2">
+              {{ item.nome }}
+            </h3>
+            <div class="flex flex-wrap gap-x-3 gap-y-1 mt-1">
+              <span class="inline-flex items-center gap-1 text-[11px] text-slate-400">
+                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" /></svg>
+                {{ item.categoria }}
+              </span>
+              <span class="inline-flex items-center gap-1 text-[11px] text-slate-400">
+                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5" /></svg>
+                {{ item.sku }}
+              </span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-2">
+            <div class="text-xs text-slate-500">
+              <span class="font-semibold text-slate-700">{{ item.quantidade }}x</span>
+              <span class="mx-1">·</span>
+              <span>{{ formatarMoeda(item.precoUnitarioCents) }} un</span>
+            </div>
+            <span class="text-sm font-bold text-azul-profundo-escuro">
+              {{ formatarMoeda(item.quantidade * item.precoUnitarioCents) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!itens || itens.length === 0" class="p-8 text-center text-slate-400">
+      Nenhum item adicionado ao carrinho.
+    </div>
+  </div>
+
+  <!-- Rodapé do Resumo -->
+  <div class="p-6 bg-slate-50 border-t border-slate-100 mt-auto">
+    <div class="flex justify-between items-center text-slate-500 text-sm mb-1">
+      <span>Quantidade Total</span>
+      <span class="font-medium">{{ obterTotalItens() }} unidades</span>
+    </div>
+    <div class="flex justify-between items-center text-slate-800">
+      <span class="text-sm font-semibold">Subtotal</span>
+      <span class="text-lg font-bold text-azul-profundo-escuro">
+        {{ formatarMoeda(obterSubtotal()) }}
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --color-cinza-fundo: #F4F5F9;
+  --color-azul-profundo: #1E293B;
+  --color-azul-profundo-escuro: #0F172A;
+  --color-verde-destaque: #4ADE80;
+  --color-azul-selecionado: #3B82F6;
+  --color-azul-claro-selecao: #EFF6FF;
+}
+
+body {
+  background-color: var(--color-cinza-fundo);
+  color: var(--color-azul-profundo-escuro);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Micro-animações suaves para melhorar a experiência do usuário */
+.animacao-transicao {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animacao-pulso-suave {
+  animation: pulso-suave 2s infinite ease-in-out;
+}
+
+@keyframes pulso-suave {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
