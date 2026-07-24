@@ -4,6 +4,7 @@ using BaseApi.Infrastructure.Dados;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaseApi.Infrastructure.Dados.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260723001113_AdicionarIndiceComprasPeriodo")]
+    partial class AdicionarIndiceComprasPeriodo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,9 +153,6 @@ namespace BaseApi.Infrastructure.Dados.Migrations
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("TagIa")
-                        .HasColumnType("longtext");
-
                     b.HasKey("Id");
 
                     b.ToTable("produtos", (string)null);
@@ -217,7 +217,6 @@ namespace BaseApi.Infrastructure.Dados.Migrations
                             NomeCompleto = "Administrador do Sistema",
                             PerfilId = 1,
                             SenhaHash = "$2a$11$I1xE4nCafftsJ6yUeS/vgeaLh1wH1Eu3WLEZi1/KSyC.7SlL00fta"
-                            SenhaHash = "$2a$11$eXErGUY46OjdkOE7Rui10uW5htA2Y8oX/nukfJoKVpB40RkjZ.lkC"
                         });
                 });
 
