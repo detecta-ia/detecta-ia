@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Diagnostics;
@@ -52,12 +52,15 @@ namespace BaseApi.Infrastructure.Controllers
                 };
 
                 string resultadoDoYolo = "";
-                using (Process process = Process.Start(startInfo))
+                using (Process? processo = Process.Start(startInfo))
                 {
-                    using (StreamReader reader = process.StandardOutput)
+                    if (processo != null)
                     {
-                        resultadoDoYolo = await reader.ReadToEndAsync();
-                        process.WaitForExit();
+                        using (StreamReader leitor = processo.StandardOutput)
+                        {
+                            resultadoDoYolo = await leitor.ReadToEndAsync();
+                            processo.WaitForExit();
+                        }
                     }
                 }
 
