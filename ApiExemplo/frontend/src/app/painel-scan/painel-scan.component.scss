@@ -4,138 +4,318 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 16px;
+  padding: 24px;
   box-sizing: border-box;
 
-  .feed-wrapper {
-    position: relative;
+  .terminal-scanner {
     width: 100%;
-    max-width: 580px;
-    aspect-ratio: 1 / 1;
-    background-color: #000000;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    border: 1px solid var(--border-subtle);
+    max-width: 680px;
+    background: #FFFFFF;
+    backdrop-filter: blur(16px);
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.06),
+      0 0 20px rgba(59, 130, 246, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 
-    .feed-elemento {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-
-      &.fallback-imagem {
-        filter: brightness(0.8) contrast(1.1);
-      }
-    }
-
-    // Linha de Scan Laser
-    .linha-laser {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(to right, rgba(99, 102, 241, 0) 5%, var(--overlay-bbox) 50%, rgba(99, 102, 241, 0) 95%);
-      box-shadow: 0 0 12px var(--overlay-bbox);
-      opacity: 0.8;
-      z-index: 5;
-      pointer-events: none;
-      animation: varredura 3.5s infinite ease-in-out;
-    }
-
-    // HUD Cantos em L
-    .hud-canto {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      border: 3px solid rgba(255, 255, 255, 0.4);
-      z-index: 4;
-      pointer-events: none;
-      border-radius: 2px;
-
-      &.canto-sup-esq {
-        top: 20px;
-        left: 20px;
-        border-right: none;
-        border-bottom: none;
-      }
-      &.canto-sup-dir {
-        top: 20px;
-        right: 20px;
-        border-left: none;
-        border-bottom: none;
-      }
-      &.canto-inf-esq {
-        bottom: 20px;
-        left: 20px;
-        border-right: none;
-        border-top: none;
-      }
-      &.canto-inf-dir {
-        bottom: 20px;
-        right: 20px;
-        border-left: none;
-        border-top: none;
-      }
-    }
-
-    // Indicador de Feed
-    .indicador-feed {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(11, 15, 25, 0.75);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 6px;
-      padding: 6px 12px;
+    /* Terminal Header */
+    .terminal-header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      z-index: 6;
-      font-size: 10px;
-      font-weight: 700;
-      color: #FFFFFF;
-      letter-spacing: 0.5px;
-      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+      padding: 4px 8px;
+      font-family: var(--font-mono);
 
-      .ponto-indicador {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background-color: var(--accent-success);
-        box-shadow: 0 0 8px var(--accent-success);
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .badge-engine {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 11px;
+          font-weight: 800;
+          color: var(--brand-primary);
+          letter-spacing: 0.5px;
+
+          .ponto-engine {
+            height: 7px;
+            width: 7px;
+            border-radius: 50%;
+            background-color: var(--brand-primary);
+            box-shadow: 0 0 8px var(--brand-primary);
+            display: inline-block;
+          }
+        }
+
+        .separador {
+          color: var(--border-subtle);
+          font-size: 12px;
+        }
+
+        .fps-info {
+          font-size: 11px;
+          font-weight: 600;
+          color: var(--text-secondary);
+        }
       }
 
-      &.simulando {
-        .ponto-indicador {
-          background-color: #3B82F6;
-          box-shadow: 0 0 8px #3B82F6;
-          animation: piscar-azul 1s infinite alternate;
+      .header-right {
+        .botao-alternar-modo {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 12px;
+          background: rgba(99, 102, 241, 0.1);
+          border: 1px solid rgba(99, 102, 241, 0.3);
+          border-radius: 8px;
+          color: var(--text-primary);
+          font-size: 11px;
+          font-weight: 700;
+          font-family: var(--font-mono);
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 12px var(--brand-primary-glow);
+          }
         }
       }
     }
+
+    /* Feed Viewport */
+    .feed-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background-color: #040711;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+
+      .feed-elemento {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+
+        &.fallback-imagem {
+          filter: brightness(0.7) contrast(1.15) hue-rotate(-5deg);
+        }
+      }
+
+      .fallback-cyber-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        .overlay-simulacao {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          pointer-events: none;
+
+          .mira-target {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .linha-mira {
+              position: absolute;
+              background-color: rgba(99, 102, 241, 0.4);
+
+              &.horizontal {
+                width: 100%;
+                height: 1px;
+              }
+
+              &.vertical {
+                width: 1px;
+                height: 100%;
+              }
+            }
+
+            .circulo-mira {
+              width: 60px;
+              height: 60px;
+              border: 1px dashed rgba(99, 102, 241, 0.6);
+              border-radius: 50%;
+              animation: girar-mira 10s linear infinite;
+            }
+          }
+        }
+      }
+
+      /* Linha de Laser Scan */
+      .linha-laser {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg,
+            transparent 0%,
+            var(--accent-cyan) 25%,
+            var(--brand-primary) 50%,
+            var(--accent-cyan) 75%,
+            transparent 100%);
+        box-shadow:
+          0 0 15px var(--accent-cyan),
+          0 0 30px var(--brand-primary);
+        opacity: 0.9;
+        z-index: 5;
+        pointer-events: none;
+        animation: varredura-laser 3s infinite ease-in-out;
+      }
+
+      /* HUD Cantos Reticulares */
+      .hud-canto {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        border: 3px solid var(--accent-cyan);
+        z-index: 4;
+        pointer-events: none;
+        border-radius: 2px;
+        filter: drop-shadow(0 0 8px var(--accent-cyan));
+
+        &.canto-sup-esq {
+          top: 18px;
+          left: 18px;
+          border-right: none;
+          border-bottom: none;
+        }
+
+        &.canto-sup-dir {
+          top: 18px;
+          right: 18px;
+          border-left: none;
+          border-bottom: none;
+        }
+
+        &.canto-inf-esq {
+          bottom: 18px;
+          left: 18px;
+          border-right: none;
+          border-top: none;
+        }
+
+        &.canto-inf-dir {
+          bottom: 18px;
+          right: 18px;
+          border-left: none;
+          border-top: none;
+        }
+      }
+
+      /* Indicador do Feed no rodapé interno */
+      .indicador-feed {
+        position: absolute;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(7, 10, 18, 0.85);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 9999px;
+        padding: 6px 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        z-index: 6;
+        font-size: 10.5px;
+        font-weight: 700;
+        color: #FFFFFF;
+        letter-spacing: 0.5px;
+        font-family: var(--font-mono);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+
+        .ponto-indicador {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background-color: var(--accent-success);
+          box-shadow: 0 0 8px var(--accent-success);
+        }
+
+        &.simulando {
+          .ponto-indicador {
+            background-color: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan);
+            animation: piscar-cyan 1s infinite alternate;
+          }
+        }
+      }
+    }
+
+    /* Terminal Footer */
+    .terminal-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4px 8px;
+
+      .instrucao-scan {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        color: var(--text-secondary);
+        font-family: var(--font-mono);
+
+        svg {
+          stroke: var(--brand-primary);
+          flex-shrink: 0;
+        }
+      }
+    }
+
   }
 }
 
-@keyframes varredura {
+@keyframes varredura-laser {
   0% {
-    top: 5%;
+    top: 4%;
   }
+
   50% {
-    top: 95%;
+    top: 94%;
   }
+
   100% {
-    top: 5%;
+    top: 4%;
   }
 }
 
-@keyframes piscar-azul {
+@keyframes piscar-cyan {
   from {
     opacity: 0.4;
   }
+
   to {
     opacity: 1;
+  }
+}
+
+@keyframes girar-mira {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

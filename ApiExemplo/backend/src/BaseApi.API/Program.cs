@@ -95,9 +95,6 @@ builder.Services.AddSwaggerGen(opt =>
 });
 
 var app = builder.Build();
-var connection = builder.Configuration.GetConnectionString("MySQL");
-
-Console.WriteLine($"Connection String: {connection}");
 
 // ================================================================
 // 5. PIPELINE DE MIDDLEWARES (ordem importa!)

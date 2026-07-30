@@ -1,11 +1,11 @@
 .carrinho-container {
-  width: 340px;
+  width: 360px;
   background-color: var(--bg-card);
   border-left: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
   height: calc(100vh - 70px);
-  padding: 24px;
+  padding: 24px 20px;
   box-sizing: border-box;
   overflow-y: auto;
 
@@ -14,7 +14,7 @@
     height: auto;
     border-left: none;
     border-top: 1px solid var(--border-subtle);
-    padding: 16px;
+    padding: 20px 16px;
   }
 
   .carrinho-cabecalho {
@@ -22,23 +22,39 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
-    .titulo-secao {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin: 0;
-      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+    .titulo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .icone-carrinho {
+        color: var(--brand-primary);
+        filter: drop-shadow(0 0 8px var(--brand-primary-glow));
+      }
+
+      .titulo-secao {
+        font-size: 17px;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin: 0;
+        font-family: var(--font-sans);
+        letter-spacing: -0.3px;
+      }
     }
 
     .emblema-contagem {
-      background-color: #EEF2FF;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
       color: var(--brand-primary);
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       padding: 4px 10px;
-      border-radius: 6px;
-      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+      border-radius: 9999px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.5px;
     }
   }
 
@@ -48,7 +64,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     padding-right: 4px;
 
     /* Custom Scrollbar */
@@ -61,7 +77,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: var(--border-subtle);
+      background: rgba(255, 255, 255, 0.12);
       border-radius: 2px;
     }
 
@@ -74,55 +90,78 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 0;
+      padding: 48px 16px;
       text-align: center;
       color: var(--text-secondary);
-      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+      font-family: var(--font-mono);
 
-      .icone-vazio {
-        margin-bottom: 12px;
-        opacity: 0.5;
-        stroke: var(--text-secondary);
+      .circulo-icone-vazio {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(99, 102, 241, 0.08);
+        border: 1px dashed rgba(99, 102, 241, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        color: var(--brand-primary);
       }
 
       .mensagem-vazia {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 700;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
         color: var(--text-primary);
       }
 
       .submensagem-vazia {
-        font-size: 10px;
+        font-size: 11px;
         color: var(--text-secondary);
+        line-height: 1.4;
+        max-width: 220px;
       }
     }
   }
 
   .bloco-total {
-    background-color: var(--total-bg);
-    border-radius: 12px;
-    padding: 16px;
+    background: #F8FAFC;
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 18px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     box-sizing: border-box;
-    border: 1px solid rgba(67, 56, 202, 0.1);
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 
-    .total-rotulo {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      font-family: "JetBrains Mono", "Roboto Mono", monospace;
-      letter-spacing: 0.5px;
+    .total-info {
+      display: flex;
+      flex-direction: column;
+
+      .total-rotulo {
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--text-secondary);
+        font-family: var(--font-mono);
+        letter-spacing: 0.8px;
+      }
+
+      .total-subtexto {
+        font-size: 10px;
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        margin-top: 2px;
+      }
     }
 
     .total-valor {
       font-size: 26px;
-      font-weight: 700;
-      color: var(--brand-primary);
-      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+      font-weight: 800;
+      color: #059669;
+      font-family: var(--font-mono);
     }
   }
 
@@ -130,48 +169,53 @@
     display: flex;
     gap: 12px;
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 
     button {
-      flex: 1;
       height: 48px;
       border-radius: 12px;
       font-size: 13px;
       font-weight: 700;
-      font-family: "JetBrains Mono", "Roboto Mono", monospace;
+      font-family: var(--font-mono);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       box-sizing: border-box;
 
       &:disabled {
-        opacity: 0.5;
+        opacity: 0.4;
         cursor: not-allowed;
         pointer-events: none;
       }
     }
 
     .botao-limpar {
-      background-color: #FFFFFF;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-primary);
+      flex: 1;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
 
       &:hover:not(:disabled) {
-        background-color: #F9FAFB;
-        border-color: #9CA3AF;
+        background: rgba(239, 68, 68, 0.12);
+        border-color: rgba(239, 68, 68, 0.4);
+        color: var(--accent-danger);
+        box-shadow: 0 0 12px rgba(239, 68, 68, 0.15);
       }
     }
 
     .botao-finalizar {
-      background-color: var(--accent-cta);
+      flex: 2;
+      background: var(--accent-cta);
       border: none;
       color: #FFFFFF;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
 
       &:hover:not(:disabled) {
-        background-color: #044E39;
-        box-shadow: 0 4px 12px rgba(6, 95, 70, 0.25);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        filter: brightness(1.1);
       }
     }
   }

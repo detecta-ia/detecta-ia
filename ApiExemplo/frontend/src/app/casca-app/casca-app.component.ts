@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ComponenteBarraSuperior } from '../barra-superior/barra-superior.component';
 import { ComponenteBarraLateral } from '../barra-lateral/barra-lateral.component';
@@ -9,6 +10,7 @@ import { ComponentePainelCarrinho } from '../painel-carrinho/painel-carrinho.com
 import { ServicoDeteccao } from '../servicos/servico-deteccao.service';
 import { ItemCarrinhoCompra } from '../modelos/item-carrinho.model';
 import { EntradaCatalogoProduto } from '../modelos/entrada-catalogo.model';
+import { EstadoCarrinhoService } from '../servicos/estado-carrinho.service';
 
 @Component({
   selector: 'casca-app',
@@ -26,6 +28,8 @@ import { EntradaCatalogoProduto } from '../modelos/entrada-catalogo.model';
 export class ComponenteCascaApp implements OnInit, OnDestroy {
   private readonly servicoDeteccao = inject(ServicoDeteccao);
   private readonly servicoTitulo = inject(Title);
+  private readonly estadoCarrinho = inject(EstadoCarrinhoService);
+  private readonly roteador = inject(Router);
 
   carrinhoItens: ItemCarrinhoCompra[] = [];
   itemNavegacaoAtivo = 'scan';
@@ -84,12 +88,11 @@ export class ComponenteCascaApp implements OnInit, OnDestroy {
   lidarLimparCarrinho(): void {
     this.carrinhoItens = [];
     this.servicoDeteccao.limparCicloProdutos();
+    this.estadoCarrinho.limpar();
   }
 
   lidarFinalizarCompra(): void {
-    const total = this.carrinhoItens.reduce((s, i) => s + i.preco, 0);
-    alert(`Compra finalizada com sucesso! Total: R$ ${total.toFixed(2).replace('.', ',')}`);
-    this.carrinhoItens = [];
-    this.servicoDeteccao.limparCicloProdutos();
+    this.estadoCarrinho.definirItens(this.carrinhoItens);
+    this.roteador.navigate(['/checkout']);
   }
 }

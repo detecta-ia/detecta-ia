@@ -36,15 +36,12 @@ namespace BaseApi.Infrastructure.Dados.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId", "Status", "CriadoEm")
-                        .HasDatabaseName("IX_Carrinhos_UsuarioId_Status_CriadoEm");
 
                     b.ToTable("Carrinhos", (string)null);
                 });
@@ -74,34 +71,6 @@ namespace BaseApi.Infrastructure.Dados.Migrations
                     b.HasIndex("ProdutoId");
 
                     b.ToTable("CarrinhoItens", (string)null);
-                });
-
-            modelBuilder.Entity("BaseApi.Domain.Entidades.HistoricoCompra", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("DataCompra")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("NomeSupermercado")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<int>("QuantidadeItens")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<decimal>("ValorTotal")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("historico_compras", (string)null);
                 });
 
             modelBuilder.Entity("BaseApi.Domain.Entidades.Perfil", b =>
@@ -244,8 +213,6 @@ namespace BaseApi.Infrastructure.Dados.Migrations
                             Email = "admin@baseapi.com",
                             NomeCompleto = "Administrador do Sistema",
                             PerfilId = 1,
-                            SenhaHash = "$2a$11$5SM/v5bK5msOMoYKJlEZkeZeSCTfLDEMHnyeiU6ynPjGuA1LZK5ni"
-                            SenhaHash = "$2a$11$I1xE4nCafftsJ6yUeS/vgeaLh1wH1Eu3WLEZi1/KSyC.7SlL00fta"
                             SenhaHash = "$2a$11$eXErGUY46OjdkOE7Rui10uW5htA2Y8oX/nukfJoKVpB40RkjZ.lkC"
                         });
                 });

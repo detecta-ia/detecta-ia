@@ -1,0 +1,11 @@
+﻿/*
+  Estilo de reset local para o modulo de checkout.
+  O frontend1 define um fundo escuro globalmente no html/body.
+  Este arquivo garante que o checkout renderize com o tema claro do frontend2.
+*/
+:host {
+  display: block;
+  background-color: #f8fafc; /* slate-50 equivalente */
+  min-height: 100%;
+  color: #1e293b; /* slate-800 - texto padrao do checkout */
+}

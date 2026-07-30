@@ -1,36 +1,88 @@
 <div class="scan-container">
-  <div class="feed-wrapper">
-    <!-- Caixa de vídeo ou imagem fallback -->
-    @if (cameraAtiva) {
-      <video #feedVideo class="feed-elemento" autoplay playsinline muted></video>
-    } @else {
-      <img src="assets/imagens/esteira.png" alt="Esteira do Supermercado (Simulador)" class="feed-elemento fallback-imagem" />
-    }
+  
+  <!-- Terminal / Main Frame of Scanner -->
+  <div class="terminal-scanner">
+    
+    <!-- Top HUD Bar -->
+    <div class="terminal-header">
+      <div class="header-left">
+        <span class="badge-engine">
+          <span class="ponto-engine"></span>
+          YOLOv8 AI ENGINE
+        </span>
+        <span class="separador">|</span>
+        <span class="fps-info">30 FPS</span>
+      </div>
 
-    <!-- Efeito Laser / Linha de Scan -->
-    <div class="linha-laser"></div>
-
-    <!-- Moldura HUD da Câmera (Quatro Cantos em L) -->
-    <div class="hud-canto canto-sup-esq"></div>
-    <div class="hud-canto canto-sup-dir"></div>
-    <div class="hud-canto canto-inf-esq"></div>
-    <div class="hud-canto canto-inf-dir"></div>
-
-    <!-- Indicador de Status do Feed -->
-    <div class="indicador-feed" [class.simulando]="!cameraAtiva">
-      <span class="ponto-indicador"></span>
-      <span class="texto-indicador">
-        {{ cameraAtiva ? 'FEED DE CÂMERA REAL' : 'MODO SIMULAÇÃO DE IA' }}
-      </span>
+      <div class="header-right">
+        <button class="botao-alternar-modo" (click)="iniciarCamera()" title="Reconectar câmera real">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+          <span>{{ cameraAtiva ? 'CÂMERA ATIVA' : 'MODO SIMULAÇÃO' }}</span>
+        </button>
+      </div>
     </div>
 
-    <!-- Renderização das Caixas de Detecção -->
-    @for (objeto of (deteccoes$ | async); track objeto.id) {
-      <caixa-deteccao
-        [caixa]="objeto.caixa"
-        [rotulo]="objeto.rotulo"
-        [status]="objeto.status"
-      ></caixa-deteccao>
-    }
+    <!-- Feed Viewport -->
+    <div class="feed-wrapper">
+      
+      <!-- Video Element or Fallback Screen -->
+      @if (cameraAtiva) {
+        <video #feedVideo class="feed-elemento" autoplay playsinline muted></video>
+      } @else {
+        <div class="fallback-cyber-container">
+          <img src="assets/imagens/esteira.png" alt="Esteira do Supermercado" class="feed-elemento fallback-imagem" />
+          <div class="overlay-simulacao">
+            <div class="mira-target">
+              <div class="linha-mira horizontal"></div>
+              <div class="linha-mira vertical"></div>
+              <div class="circulo-mira"></div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Laser Scan Effect -->
+      <div class="linha-laser"></div>
+
+      <!-- HUD Cantos Reticulares (L-Shape) -->
+      <div class="hud-canto canto-sup-esq"></div>
+      <div class="hud-canto canto-sup-dir"></div>
+      <div class="hud-canto canto-inf-esq"></div>
+      <div class="hud-canto canto-inf-dir"></div>
+
+      <!-- Bottom Status Pill -->
+      <div class="indicador-feed" [class.simulando]="!cameraAtiva">
+        <span class="ponto-indicador"></span>
+        <span class="texto-indicador">
+          {{ cameraAtiva ? 'FEED DE CÂMERA REAL EM TEMPO REAL' : 'SIMULANDO RECONHECIMENTO DE PRODUTOS' }}
+        </span>
+      </div>
+
+      <!-- Renderization of Bounding Boxes -->
+      @for (objeto of (deteccoes$ | async); track objeto.id) {
+        <caixa-deteccao
+          [caixa]="objeto.caixa"
+          [rotulo]="objeto.rotulo"
+          [status]="objeto.status"
+        ></caixa-deteccao>
+      }
+    </div>
+
+    <!-- Terminal Footer Status Bar -->
+    <div class="terminal-footer">
+      <div class="instrucao-scan">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span>Posicione o produto em frente ao scanner para adição automática ao carrinho</span>
+      </div>
+    </div>
+
   </div>
+
 </div>
