@@ -36,7 +36,7 @@ const DADOS_CARRINHO_MOCK: DadosCarrinho = {
   providedIn: 'root'
 })
 export class CarrinhoService {
-  private urlBasePadrao = environment.apiUrl.replace(/\/(swagger(\/index\.html)?|api)\/?$/i, '').replace(/\/$/, '');
+  private urlBasePadrao = environment.apiUrlSwagger.replace(/\/(swagger(\/index\.html)?|api)\/?$/i, '').replace(/\/$/, '');
   private urlsDisponiveis = [this.urlBasePadrao];
   private urlBaseAtiva = this.urlBasePadrao;
 

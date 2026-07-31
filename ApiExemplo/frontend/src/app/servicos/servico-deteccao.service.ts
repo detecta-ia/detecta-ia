@@ -23,7 +23,7 @@ export class ServicoDeteccao {
   private readonly http = inject(HttpClient);
   private readonly servicoCatalogo = inject(ServicoCatalogoProdutos);
 
-  private readonly URL_API = `${environment.apiUrl.replace(/\/(swagger(\/index\.html)?|api)\/?$/i, '')}/api/detectar`;
+  private readonly URL_API = `${environment.apiUrlBackend.replace(/\/+$/, '')}/api/detectar`;
   private readonly LIMIAR_CONFIANCA = 0.3;
   private readonly FRAMES_PARA_CONFIRMAR = 5;
 
