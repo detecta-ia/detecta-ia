@@ -143,7 +143,7 @@
   flex: 1;
   min-height: 0;
   height: calc(100vh - 3.25rem);
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
