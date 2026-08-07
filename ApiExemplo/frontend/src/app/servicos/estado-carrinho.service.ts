@@ -4,8 +4,8 @@ import { map } from 'rxjs/operators';
 import { ItemCarrinhoCompra } from '../modelos/item-carrinho.model';
 import { ItemCarrinho, DadosCarrinho } from './carrinho.service';
 
-const TAXA_SERVICO_PADRAO_CENTS = 4500;
-const DESCONTO_PADRAO_CENTS = 15000;
+const TAXA_SERVICO_PADRAO_CENTS = 0;
+const DESCONTO_PADRAO_CENTS = 0;
 
 @Injectable({
   providedIn: 'root'

@@ -28,8 +28,8 @@ const DADOS_CARRINHO_MOCK: DadosCarrinho = {
   itens: [
 
   ],
-  taxaServicoCents: 4500,
-  descontoCents: 15000
+  taxaServicoCents: 0,
+  descontoCents: 0
 };
 
 @Injectable({
@@ -68,8 +68,8 @@ export class CarrinhoService {
         return {
           carrinho: {
             itens: itensValidos,
-            taxaServicoCents: dados?.taxaServicoCents ?? DADOS_CARRINHO_MOCK.taxaServicoCents,
-            descontoCents: dados?.descontoCents ?? DADOS_CARRINHO_MOCK.descontoCents
+            taxaServicoCents: 0,
+            descontoCents: 0
           },
           modoDemonstracao: false,
           servidorConectado: true
