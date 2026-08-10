@@ -1,9 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
 
 @import "tailwindcss";
 
+:root {
+  /* Design Tokens - Alinhados com o frontend2 (Tema Claro) */
+  --bg-app: #F4F5F9;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8FAFC;
+  --bg-elevated: #FFFFFF;
+  --bg-central: #F8FAFC;
+
+  --brand-primary: #3B82F6;
+  --brand-primary-glow: rgba(59, 130, 246, 0.15);
+  --brand-secondary: #1E293B;
+  --brand-accent: #2563EB;
+
+  --accent-cyan: #0284C7;
+  --accent-cyan-glow: rgba(2, 132, 199, 0.15);
+  --accent-success: #10B981;
+  --accent-success-glow: rgba(16, 185, 129, 0.15);
+  --accent-warning: #F59E0B;
+  --accent-danger: #EF4444;
+  --accent-cta: linear-gradient(135deg, #059669, #10B981);
+
+  --border-subtle: #E2E8F0;
+  --border-glow: rgba(59, 130, 246, 0.2);
+
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  --total-bg: #F8FAFC;
+  --overlay-bbox: #3B82F6;
+  --bg-sidebar-hover: #EFF6FF;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Inter', system-ui, -apple-system, sans-serif;
   --color-cinza-fundo: #F4F5F9;
   --color-azul-profundo: #1E293B;
   --color-azul-profundo-escuro: #0F172A;
@@ -12,17 +49,42 @@
   --color-azul-claro-selecao: #EFF6FF;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: var(--color-cinza-fundo);
-  color: var(--color-azul-profundo-escuro);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
+  height: 100vh;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Micro-animações suaves para melhorar a experiência do usuário */
+/* Scrollbars personalizadas */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(7, 10, 18, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(129, 140, 248, 0.4);
+}
+
+/* Micro-animações e utilitários de brilho */
 .animacao-transicao {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -31,11 +93,40 @@ body {
   animation: pulso-suave 2s infinite ease-in-out;
 }
 
+.glow-efeito-primary {
+  box-shadow: 0 0 20px var(--brand-primary-glow);
+}
+
+.glow-efeito-cyan {
+  box-shadow: 0 0 20px var(--accent-cyan-glow);
+}
+
 @keyframes pulso-suave {
-  0%, 100% {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.75;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes radar-scan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  50% {
     opacity: 1;
   }
-  50% {
-    opacity: 0.7;
+
+  100% {
+    transform: translateY(1000%);
+    opacity: 0;
   }
 }

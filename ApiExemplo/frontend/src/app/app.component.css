@@ -1,0 +1,149 @@
+/* =====================================================
+   Shell Global da Aplicacao Unificada
+   Estilo: claro, conforme padrao do frontend2
+   ===================================================== */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-app, #F4F5F9);
+}
+
+/* ---- Barra de Navegacao ---- */
+.nav-global {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  height: 3.25rem;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+/* Marca */
+.nav-marca {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex-shrink: 0;
+}
+
+.nav-icone-marca {
+  width: 2rem;
+  height: 2rem;
+  background: #2563EB;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+.nav-icone-marca svg {
+  width: 1rem;
+  height: 1rem;
+  color: #fff;
+}
+
+.nav-subtitulo {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #2563EB;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  line-height: 1;
+}
+
+.nav-titulo {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0F172A;
+  display: block;
+  line-height: 1.2;
+}
+
+/* Links de Navegacao */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.nav-link:hover {
+  color: #0F172A;
+  background-color: #F1F5F9;
+  border-color: #E2E8F0;
+}
+
+.nav-link-ativo {
+  color: #2563EB !important;
+  background-color: #EFF6FF !important;
+  border-color: #BFDBFE !important;
+}
+
+.nav-link-icone {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* Badges dos modulos */
+.nav-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.1rem 0.375rem;
+  border-radius: 999px;
+  background: #EFF6FF;
+  color: #2563EB;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.nav-badge-verde {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+/* Versao */
+.nav-versao {
+  flex-shrink: 0;
+}
+
+.nav-versao-texto {
+  font-size: 0.65rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+/* Conteudo da Rota */
+.conteudo-rota {
+  flex: 1;
+  min-height: 0;
+  height: calc(100vh - 3.25rem);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}

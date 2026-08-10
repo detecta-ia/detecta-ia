@@ -14,10 +14,6 @@ export class ComponenteBarraLateral implements OnInit {
 
   itens: ItemNavegacao[] = [
     { id: 'scan', rotulo: 'Interface de Scan', icone: 'scan', ativo: true },
-    { id: 'dashboard', rotulo: 'Dashboard', icone: 'dashboard', ativo: false },
-    { id: 'estoque', rotulo: 'Estoque', icone: 'estoque', ativo: false },
-    { id: 'configuracoes', rotulo: 'Configurações', icone: 'configuracoes', ativo: false },
-    { id: 'suporte', rotulo: 'Suporte', icone: 'suporte', ativo: false },
     { id: 'sair', rotulo: 'Sair', icone: 'sair', ativo: false }
   ];
 

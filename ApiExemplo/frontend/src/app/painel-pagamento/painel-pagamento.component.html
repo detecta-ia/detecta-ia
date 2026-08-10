@@ -157,12 +157,8 @@
         <span class="font-medium text-white">{{ formatarMoeda(subtotal) }}</span>
       </div>
       <div class="flex justify-between items-center text-slate-400 text-sm">
-        <span>Taxa de Serviço</span>
-        <span class="font-medium text-white">{{ formatarMoeda(taxaServicoCents) }}</span>
-      </div>
-      <div class="flex justify-between items-center text-slate-400 text-sm">
         <span>Desconto</span>
-        <span class="font-medium text-emerald-400">-{{ formatarMoeda(descontoCents) }}</span>
+        <span class="font-medium text-emerald-400">{{ descontoCents > 0 ? '-' + formatarMoeda(descontoCents) : formatarMoeda(descontoCents) }}</span>
       </div>
 
       <hr class="border-slate-800 my-1" />

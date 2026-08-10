@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, catchError, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface ItemCarrinho {
   sku: string;
@@ -20,47 +21,26 @@ export interface DadosCarrinho {
 export interface ResultadoRevisao {
   carrinho: DadosCarrinho;
   modoDemonstracao: boolean;
+  servidorConectado?: boolean;
 }
 
 const DADOS_CARRINHO_MOCK: DadosCarrinho = {
   itens: [
-    {
-      sku: 'SKU-99823',
-      nome: 'Leitor de Código de Barras Honeywell Xenon 1900g',
-      categoria: 'Hardware de Escaneamento',
-      quantidade: 2,
-      precoUnitarioCents: 125000,
-      imagemUrl: '/imagens/leitor_honeywell.png'
-    },
-    {
-      sku: 'SKU-44321',
-      nome: 'Licença ScanIQ Pro AI Cloud Enterprise (1 Ano)',
-      categoria: 'Softwares & SaaS',
-      quantidade: 1,
-      precoUnitarioCents: 299900,
-      imagemUrl: '/imagens/licenca_scaniq.png'
-    },
-    {
-      sku: 'SKU-10293',
-      nome: 'Suporte Articulado Industrial para Scanners Pro',
-      categoria: 'Acessórios',
-      quantidade: 3,
-      precoUnitarioCents: 32000,
-      imagemUrl: '/imagens/suporte_articulado.png'
-    }
+
   ],
-  taxaServicoCents: 4500,
-  descontoCents: 15000
+  taxaServicoCents: 0,
+  descontoCents: 0
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarrinhoService {
-  private urlsDisponiveis = ['https://localhost:7218', 'http://localhost:5107'];
-  private urlBaseAtiva = 'https://localhost:7218';
+  private urlBasePadrao = environment.apiUrlSwagger.replace(/\/(swagger(\/index\.html)?|api)\/?$/i, '').replace(/\/$/, '');
+  private urlsDisponiveis = [this.urlBasePadrao];
+  private urlBaseAtiva = this.urlBasePadrao;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   obterUrlsDisponiveis(): string[] {
     return this.urlsDisponiveis;
@@ -76,21 +56,50 @@ export class CarrinhoService {
     return this.urlBaseAtiva;
   }
 
-  obterRevisaoCarrinho(): Observable<ResultadoRevisao> {
-    return this.http.get<DadosCarrinho>(`${this.urlBaseAtiva}/api/Carrinhos/revisao`).pipe(
-      map((dados) => ({ carrinho: dados, modoDemonstracao: false })),
+  obterRevisaoCarrinho(usuarioId?: string): Observable<ResultadoRevisao> {
+    const url = usuarioId
+      ? `${this.urlBaseAtiva}/api/Carrinhos/revisao?usuarioId=${encodeURIComponent(usuarioId)}`
+      : `${this.urlBaseAtiva}/api/Carrinhos/revisao`;
+
+    return this.http.get<any>(url).pipe(
+      map((resposta) => {
+        const dados = resposta?.dados ?? resposta;
+        const itensValidos = Array.isArray(dados?.itens) && dados.itens.length > 0 ? dados.itens : DADOS_CARRINHO_MOCK.itens;
+        return {
+          carrinho: {
+            itens: itensValidos,
+            taxaServicoCents: 0,
+            descontoCents: 0
+          },
+          modoDemonstracao: false,
+          servidorConectado: true
+        };
+      }),
       catchError((erro) => {
-        console.warn('Backend offline. Ativando dados de demonstração locais:', erro.message);
-        return of({ carrinho: DADOS_CARRINHO_MOCK, modoDemonstracao: true });
+        // Se erro.status !== 0, o servidor HTTP do backend respondeu (ex: status 400 ou 500)
+        const servidorConectado = erro.status !== 0;
+        console.warn(`[CarrinhoService] Status backend (${erro.status}). Servidor ${servidorConectado ? 'Conectado' : 'Offline'}:`, erro.message);
+        return of({
+          carrinho: DADOS_CARRINHO_MOCK,
+          modoDemonstracao: !servidorConectado,
+          servidorConectado: servidorConectado
+        });
       })
     );
   }
 
-  avancarPagamento(formaPagamento: number): Observable<any> {
+  avancarPagamento(formaPagamento: number, usuarioId?: string): Observable<any> {
     const payload = {
-      usuarioId: 'usuario-teste-123',
+      usuarioId: usuarioId ?? 'usuario-teste-123',
       formaPagamento: formaPagamento
     };
     return this.http.post(`${this.urlBaseAtiva}/api/Carrinhos/avancar-pagamento`, payload);
+  }
+
+  verificarConexaoBackend(): Observable<boolean> {
+    return this.http.get(`${this.urlBaseAtiva}/api/Produtos`).pipe(
+      map(() => true),
+      catchError((erro) => of(erro.status !== 0))
+    );
   }
 }

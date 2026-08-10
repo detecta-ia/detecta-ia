@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class IaService {
-  private urlDetectar = `${environment.apiUrl}/ia/detectar`;
+  private urlDetectar = `${environment.apiUrlBackend}/ia/detectar`;
 
   constructor(private http: HttpClient) { }
 

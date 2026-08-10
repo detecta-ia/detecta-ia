@@ -11,4 +11,9 @@ import { ItemCarrinhoCompra } from '../../modelos/item-carrinho.model';
 })
 export class ComponenteItemCarrinho {
   @Input() item!: ItemCarrinhoCompra;
+
+  aoErroImagem(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = 'assets/imagens/esteira.png';
+  }
 }

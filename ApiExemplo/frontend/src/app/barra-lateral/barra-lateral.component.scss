@@ -1,17 +1,16 @@
 .botao-hamburguer {
   display: none;
-  background: none;
-  border: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   cursor: pointer;
-  padding: 12px;
+  padding: 10px;
   position: absolute;
   top: 15px;
   left: 15px;
   z-index: 110;
   border-radius: 8px;
-  background-color: var(--bg-card);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 768px) {
     display: flex;
@@ -21,12 +20,12 @@
 }
 
 .barra-lateral-container {
-  width: 220px;
+  width: 230px;
   background-color: var(--bg-card);
   border-right: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
-  padding: 24px 0;
+  padding: 20px 0;
   box-sizing: border-box;
   height: calc(100vh - 70px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -37,15 +36,22 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 16px;
-    margin: 0 16px 24px 16px;
-    background-color: #F9FAFB;
-    border: 1px solid var(--border-subtle);
+    padding: 12px 14px;
+    margin: 0 16px 20px 16px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.2);
     border-radius: 12px;
     transition: all 0.3s ease;
 
+    &:hover {
+      background: rgba(99, 102, 241, 0.14);
+      border-color: rgba(99, 102, 241, 0.35);
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.15);
+    }
+
     .quadrado-icone {
-      background-color: var(--bg-sidebar-hover);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(129, 140, 248, 0.2));
+      border: 1px solid rgba(99, 102, 241, 0.4);
       width: 36px;
       height: 36px;
       border-radius: 8px;
@@ -53,6 +59,10 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+
+      svg {
+        stroke: var(--brand-primary);
+      }
     }
 
     .texto-sistema {
@@ -61,16 +71,16 @@
 
       .status-sistema {
         font-size: 11px;
-        font-weight: 700;
+        font-weight: 800;
         color: var(--text-primary);
         letter-spacing: 0.5px;
-        font-family: "JetBrains Mono", "Roboto Mono", monospace;
+        font-family: var(--font-mono);
       }
 
       .estacao-sistema {
         font-size: 10px;
-        color: var(--text-secondary);
-        font-family: "JetBrains Mono", "Roboto Mono", monospace;
+        color: var(--brand-primary);
+        font-family: var(--font-mono);
       }
     }
   }
@@ -86,15 +96,15 @@
     .item-menu {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       padding: 12px 24px;
       color: var(--text-secondary);
       cursor: pointer;
       position: relative;
-      font-size: 14px;
-      font-weight: 500;
-      font-family: "JetBrains Mono", "Roboto Mono", monospace;
-      transition: all 0.2s ease;
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
       .icone-menu {
         display: flex;
@@ -103,7 +113,7 @@
         width: 20px;
         height: 20px;
         flex-shrink: 0;
-        transition: transform 0.2s ease;
+        transition: transform 0.2s ease, color 0.2s ease;
       }
 
       .rotulo-menu {
@@ -113,41 +123,48 @@
       }
 
       &:hover {
-        color: var(--brand-primary);
-        background-color: rgba(67, 56, 202, 0.04);
-        
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.04);
+
         .icone-menu {
-          transform: translateX(2px);
+          transform: translateX(3px);
+          color: var(--brand-primary);
         }
       }
 
       &.ativo {
-        color: var(--brand-primary);
-        background-color: var(--bg-sidebar-hover);
+        color: #ffffff;
+        background: linear-gradient(90deg, rgba(99, 102, 241, 0.18) 0%, rgba(99, 102, 241, 0.04) 100%);
         font-weight: 700;
+
+        .icone-menu {
+          color: var(--brand-primary);
+          filter: drop-shadow(0 0 8px var(--brand-primary-glow));
+        }
 
         &::before {
           content: '';
           position: absolute;
           left: 0;
-          top: 0;
-          bottom: 0;
-          width: 4px;
-          background-color: var(--brand-primary);
+          top: 4px;
+          bottom: 4px;
+          width: 3.5px;
+          background: linear-gradient(180deg, var(--brand-primary), var(--brand-secondary));
           border-top-right-radius: 4px;
           border-bottom-right-radius: 4px;
+          box-shadow: 0 0 10px var(--brand-primary);
         }
       }
     }
   }
 
-  /* Colapsado para Ícones (Telas médias de 768px a 1024px) */
+  /* Responsive Collapsed state */
   @media (min-width: 769px) and (max-width: 1024px) {
     width: 80px;
 
     .bloco-sistema {
-      padding: 12px;
-      margin: 0 12px 24px 12px;
+      padding: 10px;
+      margin: 0 10px 20px 10px;
       justify-content: center;
 
       .texto-sistema {
@@ -165,14 +182,14 @@
     }
   }
 
-  /* Gaveta Responsiva em Celular (< 768px) */
+  /* Mobile Drawer */
   @media (max-width: 768px) {
     position: fixed;
     top: 70px;
-    left: -220px;
+    left: -230px;
     z-index: 100;
     height: calc(100vh - 70px);
-    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
 
     &.aberto {
       left: 0;

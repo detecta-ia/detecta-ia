@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { ObjetoDetectado } from '../modelos/objeto-detectado.model';
 import { ServicoCatalogoProdutos } from './servico-catalogo.service';
 import { EntradaCatalogoProduto } from '../modelos/entrada-catalogo.model';
+import { environment } from '../../environments/environment';
 
 interface RespostaInferencia {
   deteccoes: {
@@ -22,7 +23,7 @@ export class ServicoDeteccao {
   private readonly http = inject(HttpClient);
   private readonly servicoCatalogo = inject(ServicoCatalogoProdutos);
 
-  private readonly URL_API = 'http://localhost:8000/api/detectar';
+  private readonly URL_API = `${environment.apiUrlBackend.replace(/\/+$/, '')}/api/detectar`;
   private readonly LIMIAR_CONFIANCA = 0.3;
   private readonly FRAMES_PARA_CONFIRMAR = 5;
 
