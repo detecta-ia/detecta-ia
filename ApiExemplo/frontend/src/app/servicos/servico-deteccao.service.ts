@@ -124,9 +124,9 @@ export class ServicoDeteccao {
       const confirmado = frames >= this.FRAMES_PARA_CONFIRMAR;
 
       // Se confirmado e ainda não adicionado neste ciclo de checkout
-      if (confirmado && !this.produtosAdicionadosNoCiclo.has(produto.sku)) {
+      if (confirmado && !this.produtosAdicionadosNoCiclo.has(produto.nomeClasse)) {
         this.subProdutoConfirmado.next(produto);
-        this.produtosAdicionadosNoCiclo.add(produto.sku);
+        this.produtosAdicionadosNoCiclo.add(produto.nomeClasse);
       }
 
       // Converte bbox normalizado para percentual css
@@ -174,9 +174,9 @@ export class ServicoDeteccao {
         const confianca = this.calcularConfiancaSimulada(ciclo, 2, 7);
         const status = confianca >= this.LIMIAR_CONFIANCA ? 'confirmado' : 'identificando';
 
-        if (status === 'confirmado' && !this.produtosAdicionadosNoCiclo.has(produto.sku)) {
+        if (status === 'confirmado' && !this.produtosAdicionadosNoCiclo.has(produto.nomeClasse)) {
           this.subProdutoConfirmado.next(produto);
-          this.produtosAdicionadosNoCiclo.add(produto.sku);
+          this.produtosAdicionadosNoCiclo.add(produto.nomeClasse);
         }
 
         // Simula movimento suave na esteira (esquerda para a direita)
@@ -203,9 +203,9 @@ export class ServicoDeteccao {
         const confianca = this.calcularConfiancaSimulada(ciclo, 14, 19);
         const status = confianca >= this.LIMIAR_CONFIANCA ? 'confirmado' : 'identificando';
 
-        if (status === 'confirmado' && !this.produtosAdicionadosNoCiclo.has(produto.sku)) {
+        if (status === 'confirmado' && !this.produtosAdicionadosNoCiclo.has(produto.nomeClasse)) {
           this.subProdutoConfirmado.next(produto);
-          this.produtosAdicionadosNoCiclo.add(produto.sku);
+          this.produtosAdicionadosNoCiclo.add(produto.nomeClasse);
         }
 
         const progresso = (ciclo - 14) / 10;
@@ -231,9 +231,9 @@ export class ServicoDeteccao {
         const confianca = this.calcularConfiancaSimulada(ciclo, 26, 31);
         const status = confianca >= this.LIMIAR_CONFIANCA ? 'confirmado' : 'identificando';
 
-        if (status === 'confirmado' && !this.produtosAdicionadosNoCiclo.has(produto.sku)) {
+        if (status === 'confirmado' && !this.produtosAdicionadosNoCiclo.has(produto.nomeClasse)) {
           this.subProdutoConfirmado.next(produto);
-          this.produtosAdicionadosNoCiclo.add(produto.sku);
+          this.produtosAdicionadosNoCiclo.add(produto.nomeClasse);
         }
 
         const progresso = (ciclo - 26) / 10;

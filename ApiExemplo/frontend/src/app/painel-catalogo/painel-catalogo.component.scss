@@ -743,3 +743,21 @@
     background: #002699;
   }
 }
+
+/* ======================== */
+/* Spinner de Exclusão       */
+/* ======================== */
+.spinner-deletar {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(220, 38, 38, 0.25);
+  border-top-color: #DC2626;
+  border-radius: 50%;
+  animation: girarSpinner 0.6s linear infinite;
+}
+
+.botao-remover:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

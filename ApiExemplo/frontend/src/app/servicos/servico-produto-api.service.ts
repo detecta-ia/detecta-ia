@@ -69,6 +69,22 @@ export class ServicoProdutoApi {
   }
 
   /**
+   * Exclui um produto do backend pelo ID.
+   *
+   * DELETE /api/Produtos?id={guid}
+   * Resposta: 200 OK com RespostaApi
+   */
+  deletarProduto(id: string): Observable<RespostaApi<unknown>> {
+    const parametros = new HttpParams().set('id', id);
+
+    return this.http
+      .delete<RespostaApi<unknown>>(this.urlBase, { params: parametros })
+      .pipe(
+        catchError(this.tratarErro)
+      );
+  }
+
+  /**
    * Tratamento centralizado de erros HTTP.
    * Extrai mensagens amigáveis do wrapper RespostaApi quando possível.
    */

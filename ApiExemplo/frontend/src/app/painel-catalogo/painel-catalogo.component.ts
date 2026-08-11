@@ -35,7 +35,6 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
     nome: '',
     categoria: 'Eletrônicos',
     subcategoria: 'Acessórios',
-    sku: '',
     preco: 0,
     estoqueQuantidade: 0,
     unidadeMedida: 'UN',
@@ -97,7 +96,6 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
       nome: dto.nome || (dto as any).Nome || '',
       categoria: dto.categoria || (dto as any).Categoria || '',
       subcategoria: '',
-      sku: dto.id ? dto.id.substring(0, 8).toUpperCase() : '',
       preco: isNaN(valorPreco) ? 0 : valorPreco,
       estoqueQuantidade: 0,
       unidadeMedida: 'UN',
@@ -121,7 +119,6 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
     const termo = this.termoBusca.toLowerCase().trim();
     return this.listaProdutos.filter(p =>
       p.nome.toLowerCase().includes(termo) ||
-      p.sku.toLowerCase().includes(termo) ||
       p.categoria.toLowerCase().includes(termo) ||
       p.subcategoria.toLowerCase().includes(termo)
     );
@@ -152,7 +149,6 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
       nome: '',
       categoria: 'Eletrônicos',
       subcategoria: 'Áudio',
-      sku: `SKU-${Math.floor(1000 + Math.random() * 9000)}`,
       preco: 199.90,
       estoqueQuantidade: 15,
       unidadeMedida: 'UN',
@@ -242,10 +238,42 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
     }
   }
 
+  // Controle de loading para exclusão
+  carregandoDeletar = false;
+  idProdutoDeletando = '';
+
   removerProduto(id: string): void {
-    if (confirm('Deseja realmente remover este produto do catálogo?')) {
-      this.servicoCatalogo.removerProdutoEstoque(id);
+    if (!confirm('Deseja realmente remover este produto do catálogo?')) {
+      return;
     }
+
+    this.carregandoDeletar = true;
+    this.idProdutoDeletando = id;
+
+    this.servicoProdutoApi.deletarProduto(id).subscribe({
+      next: (resposta) => {
+        this.carregandoDeletar = false;
+        this.idProdutoDeletando = '';
+
+        // Remove o produto da lista local para atualização imediata na UI
+        this.listaProdutos = this.listaProdutos.filter(p => p.id !== id);
+
+        this.exibirToastSucesso(
+          resposta.mensagem || 'Produto excluído com sucesso!'
+        );
+
+        this.detectorMudancas.markForCheck();
+      },
+      error: (mensagemErro: string) => {
+        this.carregandoDeletar = false;
+        this.idProdutoDeletando = '';
+
+        this.exibirToastSucesso(''); // Limpa toast de sucesso anterior
+        this.mensagemErro = mensagemErro;
+
+        this.detectorMudancas.markForCheck();
+      }
+    });
   }
 
   exportarCatalogo(): void {

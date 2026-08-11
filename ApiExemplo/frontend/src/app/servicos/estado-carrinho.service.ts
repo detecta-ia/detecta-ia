@@ -19,7 +19,6 @@ export class EstadoCarrinhoService {
    */
   definirItens(itensScan: ItemCarrinhoCompra[]): void {
     const itensConvertidos: ItemCarrinho[] = itensScan.map(item => ({
-      sku: item.sku,
       nome: item.nome,
       categoria: 'Produto Detectado',
       quantidade: 1,

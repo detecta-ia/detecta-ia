@@ -12,7 +12,6 @@ export class ServicoCatalogoProdutos {
       classeId: 0,
       nomeClasse: 'leite_integral_1l',
       nome: 'Leite Integral 1L',
-      sku: '90210-A',
       preco: 4.50,
       urlMiniatura: 'assets/imagens/leite.png'
     },
@@ -20,7 +19,6 @@ export class ServicoCatalogoProdutos {
       classeId: 1,
       nomeClasse: 'mirtilos_organicos',
       nome: 'Mirtilos Orgânicos',
-      sku: '33401-B',
       preco: 12.90,
       urlMiniatura: 'assets/imagens/mirtilos.png'
     },
@@ -28,7 +26,6 @@ export class ServicoCatalogoProdutos {
       classeId: 2,
       nomeClasse: 'agua_mineral_gas',
       nome: 'Água Mineral Gás',
-      sku: '11045-G',
       preco: 3.25,
       urlMiniatura: 'assets/imagens/agua.png'
     },
@@ -36,7 +33,6 @@ export class ServicoCatalogoProdutos {
       classeId: 3,
       nomeClasse: 'mouse_computador',
       nome: 'Mouse de Computador',
-      sku: '55020-M',
       preco: 49.90,
       urlMiniatura: 'assets/imagens/mouse.png'
     },
@@ -44,7 +40,6 @@ export class ServicoCatalogoProdutos {
       classeId: 4,
       nomeClasse: 'pessoa_gabriel',
       nome: 'Gabriel',
-      sku: '77001-P',
       preco: 0.00,
       urlMiniatura: 'assets/imagens/pessoa.png'
     }

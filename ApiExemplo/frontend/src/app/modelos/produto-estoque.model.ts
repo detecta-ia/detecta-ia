@@ -3,7 +3,6 @@ export interface ProdutoEstoque {
   nome: string;
   categoria: string;
   subcategoria: string;
-  sku: string;
   preco: number;
   estoqueQuantidade: number;
   unidadeMedida: string;

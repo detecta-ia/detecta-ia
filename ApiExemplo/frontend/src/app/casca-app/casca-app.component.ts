@@ -61,14 +61,13 @@ export class ComponenteCascaApp implements OnInit, OnDestroy {
 
   adicionarAoCarrinho(produto: EntradaCatalogoProduto): void {
     // Evita duplicados (conforme especificação: "se ainda não estiver na lista, é adicionado")
-    const jaAdicionado = this.carrinhoItens.some(item => item.sku === produto.sku);
+    const jaAdicionado = this.carrinhoItens.some(item => item.nome === produto.nome);
     if (!jaAdicionado) {
       this.carrinhoItens = [
         ...this.carrinhoItens,
         {
-          id: `item_${produto.sku}_${Date.now()}`,
+          id: `item_${produto.nomeClasse}_${Date.now()}`,
           nome: produto.nome,
-          sku: produto.sku,
           preco: produto.preco,
           urlMiniatura: produto.urlMiniatura
         }

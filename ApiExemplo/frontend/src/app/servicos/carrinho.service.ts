@@ -4,7 +4,6 @@ import { Observable, of, catchError, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface ItemCarrinho {
-  sku: string;
   nome: string;
   categoria: string;
   quantidade: number;
