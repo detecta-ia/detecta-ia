@@ -101,55 +101,85 @@
           </tr>
         </thead>
         <tbody>
-          @for (produto of produtosPaginados; track produto.id) {
-            <tr class="linha-produto">
-              
-              <!-- Coluna: Produto -->
-              <td class="coluna-produto">
-                <div class="celula-produto">
-                  <div class="container-miniatura">
-                    <img [src]="produto.urlMiniatura" [alt]="produto.nome" class="imagem-miniatura" />
-                  </div>
-                  <div class="info-produto">
-                    <h3 class="nome-produto">{{ produto.nome }}</h3>
-                    <span class="categoria-produto">{{ produto.categoria }} • {{ produto.subcategoria }}</span>
-                  </div>
+          <!-- Estado: Carregando -->
+          @if (carregandoLista) {
+            <tr>
+              <td colspan="4" class="estado-carregamento">
+                <div class="loading-container">
+                  <span class="spinner-lista"></span>
+                  <span>Carregando produtos do servidor...</span>
                 </div>
               </td>
-
-              <!-- Coluna: Preço -->
-              <td class="coluna-preco">
-                <span class="valor-preco">{{ produto.preco | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
-              </td>
-
-              <!-- Coluna: Estoque (Badge) -->
-              <td class="coluna-estoque">
-                <span 
-                  class="badge-estoque" 
-                  [class.badge-alerta]="produto.estoqueQuantidade <= 20"
-                  [class.badge-normal]="produto.estoqueQuantidade > 20"
-                >
-                  {{ produto.estoqueQuantidade }} {{ produto.unidadeMedida }}
-                </span>
-              </td>
-
-              <!-- Coluna: Ações -->
-              <td class="coluna-acoes">
-                <button class="botao-remover" (click)="removerProduto(produto.id)" title="Remover Produto">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                  </svg>
-                </button>
-              </td>
-
             </tr>
-          } @empty {
+          }
+          <!-- Estado: Erro de carregamento -->
+          @else if (erroCarregamento) {
             <tr>
-              <td colspan="4" class="sem-produtos">
-                Nenhum produto encontrado.
+              <td colspan="4" class="estado-erro-carregamento">
+                <div class="erro-container">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                  <span>{{ erroCarregamento }}</span>
+                  <button class="botao-tentar-novamente" (click)="carregarProdutosDaApi()">Tentar novamente</button>
+                </div>
               </td>
             </tr>
+          }
+          <!-- Estado: Lista de produtos -->
+          @else {
+            @for (produto of produtosPaginados; track produto.id) {
+              <tr class="linha-produto">
+                
+                <!-- Coluna: Produto -->
+                <td class="coluna-produto">
+                  <div class="celula-produto">
+                    <div class="container-miniatura">
+                      <img [src]="produto.urlMiniatura" [alt]="produto.nome" class="imagem-miniatura" />
+                    </div>
+                    <div class="info-produto">
+                      <h3 class="nome-produto">{{ produto.nome }}</h3>
+                      <span class="categoria-produto">{{ produto.categoria }}@if (produto.subcategoria) { • {{ produto.subcategoria }}}</span>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Coluna: Preço -->
+                <td class="coluna-preco">
+                  <span class="valor-preco">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</span>
+                </td>
+
+                <!-- Coluna: Estoque (Badge) -->
+                <td class="coluna-estoque">
+                  <span 
+                    class="badge-estoque" 
+                    [class.badge-alerta]="produto.estoqueQuantidade <= 20"
+                    [class.badge-normal]="produto.estoqueQuantidade > 20"
+                  >
+                    {{ produto.estoqueQuantidade }} {{ produto.unidadeMedida }}
+                  </span>
+                </td>
+
+                <!-- Coluna: Ações -->
+                <td class="coluna-acoes">
+                  <button class="botao-remover" (click)="removerProduto(produto.id)" title="Remover Produto">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                  </button>
+                </td>
+
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="4" class="sem-produtos">
+                  Nenhum produto encontrado.
+                </td>
+              </tr>
+            }
           }
         </tbody>
       </table>

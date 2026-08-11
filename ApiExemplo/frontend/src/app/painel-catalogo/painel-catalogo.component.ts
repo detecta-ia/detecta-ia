@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { ServicoCatalogoProdutos } from '../servicos/servico-catalogo.service';
 import { ServicoProdutoApi } from '../servicos/servico-produto-api.service';
 import { ProdutoEstoque } from '../modelos/produto-estoque.model';
-import { CriarProdutoRequisicao } from '../modelos/produto-api.model';
+import { CriarProdutoRequisicao, ProdutoListaDto } from '../modelos/produto-api.model';
 
 @Component({
   selector: 'painel-catalogo',
@@ -44,18 +44,65 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
 
   // Estado de integração com a API
   carregandoSalvar = false;
+  carregandoLista = false;
   mensagemSucesso = '';
   mensagemErro = '';
+  erroCarregamento = '';
 
   ngOnInit(): void {
-    // Garante que a lista inicial é obtida imediatamente do serviço
-    this.listaProdutos = this.servicoCatalogo.obterProdutosEstoque();
-    this.detectorMudancas.markForCheck();
+    // Carrega os produtos do banco de dados via API
+    this.carregarProdutosDaApi();
+  }
 
-    this.inscricaoProdutos = this.servicoCatalogo.produtosEstoque$.subscribe(produtos => {
-      this.listaProdutos = produtos;
-      this.detectorMudancas.markForCheck();
+  /**
+   * Busca os produtos persistidos no backend e popula a lista local.
+   * Mapeia ProdutoListaDto (backend) → ProdutoEstoque (frontend).
+   */
+  carregarProdutosDaApi(): void {
+    this.carregandoLista = true;
+    this.erroCarregamento = '';
+
+    this.servicoProdutoApi.listarProdutos(1, 200).subscribe({
+      next: (resposta) => {
+        this.carregandoLista = false;
+
+        if (resposta.ok && resposta.dados) {
+          // Mapeia os DTOs do backend para o modelo local do frontend
+          this.listaProdutos = resposta.dados.itens.map(dto => this.mapearParaProdutoEstoque(dto));
+          this.totalBaseCatalogo = resposta.dados.total;
+        }
+
+        this.detectorMudancas.markForCheck();
+      },
+      error: (mensagemErro: string) => {
+        this.carregandoLista = false;
+        this.erroCarregamento = mensagemErro;
+        // Fallback: mantém lista vazia mas exibe erro
+        this.listaProdutos = [];
+        this.detectorMudancas.markForCheck();
+      }
     });
+  }
+
+  /**
+   * Converte um ProdutoListaDto (vindo da API) para ProdutoEstoque (usado na UI).
+   * Campos que não existem no backend recebem valores padrão.
+   */
+  private mapearParaProdutoEstoque(dto: ProdutoListaDto): ProdutoEstoque {
+    const precoBruto = dto.preco ?? (dto as any).Preco ?? 0;
+    const valorPreco = typeof precoBruto === 'string' ? parseFloat(precoBruto) : Number(precoBruto);
+
+    return {
+      id: dto.id,
+      nome: dto.nome || (dto as any).Nome || '',
+      categoria: dto.categoria || (dto as any).Categoria || '',
+      subcategoria: '',
+      sku: dto.id ? dto.id.substring(0, 8).toUpperCase() : '',
+      preco: isNaN(valorPreco) ? 0 : valorPreco,
+      estoqueQuantidade: 0,
+      unidadeMedida: 'UN',
+      urlMiniatura: 'assets/imagens/fone-headphone.png'
+    };
   }
 
   ngOnDestroy(): void {
@@ -155,8 +202,8 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
       next: (resposta) => {
         this.carregandoSalvar = false;
 
-        // Adiciona à lista local para feedback imediato na UI
-        this.servicoCatalogo.adicionarProdutoEstoque(this.novoProduto);
+        // Recarrega a lista da API para garantir sincronização com o banco
+        this.carregarProdutosDaApi();
 
         // Fecha o modal e exibe toast de sucesso
         this.fecharModalNovoProduto();

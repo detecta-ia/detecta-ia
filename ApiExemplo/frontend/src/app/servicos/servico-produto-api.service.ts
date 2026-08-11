@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import {
   RespostaApi,
   CriarProdutoRequisicao,
-  CriarProdutoResposta
+  CriarProdutoResposta,
+  ResultadoPaginado,
+  ProdutoListaDto
 } from '../modelos/produto-api.model';
 
 /**
@@ -24,6 +26,32 @@ export class ServicoProdutoApi {
   private readonly urlBase = `${environment.apiUrlSwagger}/api/Produtos`;
 
   constructor(private readonly http: HttpClient) {}
+
+  /**
+   * Lista produtos do backend com paginação e busca opcional.
+   *
+   * GET /api/Produtos?pagina=1&tamanhoPagina=100&busca=
+   * Resposta: 200 OK com RespostaApi<ResultadoPaginado<ProdutoListaDto>>
+   */
+  listarProdutos(
+    pagina: number = 1,
+    tamanhoPagina: number = 100,
+    busca?: string
+  ): Observable<RespostaApi<ResultadoPaginado<ProdutoListaDto>>> {
+    let parametros = new HttpParams()
+      .set('pagina', pagina.toString())
+      .set('tamanhoPagina', tamanhoPagina.toString());
+
+    if (busca && busca.trim()) {
+      parametros = parametros.set('busca', busca.trim());
+    }
+
+    return this.http
+      .get<RespostaApi<ResultadoPaginado<ProdutoListaDto>>>(this.urlBase, { params: parametros })
+      .pipe(
+        catchError(this.tratarErro)
+      );
+  }
 
   /**
    * Cria um novo produto no backend.

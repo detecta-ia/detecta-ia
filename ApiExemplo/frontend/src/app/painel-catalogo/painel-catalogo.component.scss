@@ -693,3 +693,53 @@
   align-items: center;
   gap: 8px;
 }
+
+/* ======================== */
+/* Loading / Erro na Tabela  */
+/* ======================== */
+.estado-carregamento,
+.estado-erro-carregamento {
+  text-align: center;
+  padding: 48px 24px !important;
+  color: #64748B;
+  font-size: 14px;
+}
+
+.loading-container,
+.erro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.spinner-lista {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-top-color: #3B82F6;
+  border-radius: 50%;
+  animation: girarSpinner 0.7s linear infinite;
+}
+
+.estado-erro-carregamento {
+  color: #DC2626;
+}
+
+.botao-tentar-novamente {
+  margin-top: 4px;
+  padding: 8px 20px;
+  background: #0038A8;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: #002699;
+  }
+}
