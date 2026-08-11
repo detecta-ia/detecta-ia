@@ -1,5 +1,17 @@
 <div class="painel-catalogo-container">
 
+  <!-- Toast de Sucesso -->
+  @if (mensagemSucesso) {
+    <div class="toast-sucesso" role="alert">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <span>{{ mensagemSucesso }}</span>
+      <button class="botao-fechar-toast" (click)="fecharToastSucesso()" aria-label="Fechar">&times;</button>
+    </div>
+  }
+
   <!-- Cabeçalho Superior do Módulo -->
   <header class="cabecalho-modulo">
     <div class="trilha-titulo">
@@ -245,9 +257,28 @@
             </div>
           </div>
 
+          <!-- Mensagem de Erro Inline -->
+          @if (mensagemErro) {
+            <div class="banner-erro-modal" role="alert">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+              </svg>
+              <span>{{ mensagemErro }}</span>
+            </div>
+          }
+
           <footer class="rodape-modal">
-            <button type="button" class="botao-cancelar" (click)="fecharModalNovoProduto()">Cancelar</button>
-            <button type="submit" class="botao-salvar">Salvar Produto</button>
+            <button type="button" class="botao-cancelar" (click)="fecharModalNovoProduto()" [disabled]="carregandoSalvar">Cancelar</button>
+            <button type="submit" class="botao-salvar" [disabled]="carregandoSalvar">
+              @if (carregandoSalvar) {
+                <span class="spinner-salvar"></span>
+                <span>Salvando...</span>
+              } @else {
+                <span>Salvar Produto</span>
+              }
+            </button>
           </footer>
         </form>
 

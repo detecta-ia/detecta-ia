@@ -575,3 +575,121 @@
     transform: scale(1);
   }
 }
+
+/* ======================== */
+/* Toast de Sucesso          */
+/* ======================== */
+.toast-sucesso {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #059669, #10B981);
+  color: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(5, 150, 105, 0.35);
+  font-size: 14px;
+  font-weight: 500;
+  animation: toastDeslizar 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  .botao-fechar-toast {
+    margin-left: 8px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 2px;
+    transition: color 0.15s;
+
+    &:hover {
+      color: #FFFFFF;
+    }
+  }
+}
+
+@keyframes toastDeslizar {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ======================== */
+/* Banner de Erro no Modal   */
+/* ======================== */
+.banner-erro-modal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  margin-top: 4px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #DC2626;
+  font-size: 13px;
+  font-weight: 500;
+  animation: erroSurgir 0.25s ease-out;
+
+  svg {
+    flex-shrink: 0;
+    stroke: #DC2626;
+  }
+}
+
+@keyframes erroSurgir {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================== */
+/* Spinner de Loading        */
+/* ======================== */
+.spinner-salvar {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: girarSpinner 0.6s linear infinite;
+}
+
+@keyframes girarSpinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estado disabled dos botões do modal */
+.botao-salvar:disabled,
+.botao-cancelar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.botao-salvar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
