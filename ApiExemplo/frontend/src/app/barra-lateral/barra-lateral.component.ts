@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ItemNavegacao } from '../modelos/item-navegacao.model';
 
@@ -10,23 +10,26 @@ import { ItemNavegacao } from '../modelos/item-navegacao.model';
   styleUrls: ['./barra-lateral.component.scss']
 })
 export class ComponenteBarraLateral implements OnInit {
+  @Input() itemAtivo = 'scan';
   @Output() itemSelecionado = new EventEmitter<string>();
 
   itens: ItemNavegacao[] = [
-    { id: 'scan', rotulo: 'Interface de Scan', icone: 'scan', ativo: true },
-    { id: 'sair', rotulo: 'Sair', icone: 'sair', ativo: false }
+    { id: 'scan', rotulo: 'Scan Interface', icone: 'scan' },
+    { id: 'dashboard', rotulo: 'Dashboard', icone: 'dashboard' },
+    { id: 'estoque', rotulo: 'Inventory', icone: 'estoque' },
+    { id: 'configuracoes', rotulo: 'Settings', icone: 'configuracoes' },
+    { id: 'suporte', rotulo: 'Support', icone: 'suporte' },
+    { id: 'sair', rotulo: 'Logout', icone: 'sair' }
   ];
 
   menuAberto = false;
 
-  ngOnInit(): void {
-    // Inicialização se necessário
-  }
+  ngOnInit(): void {}
 
   selecionarItem(itemClicado: ItemNavegacao): void {
-    this.itens.forEach(item => item.ativo = (item.id === itemClicado.id));
+    this.itemAtivo = itemClicado.id;
     this.itemSelecionado.emit(itemClicado.id);
-    this.menuAberto = false; // Fecha o menu hambúrguer ao selecionar em celular
+    this.menuAberto = false;
   }
 
   alternarMenu(): void {

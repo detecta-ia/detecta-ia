@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { ComponenteBarraSuperior } from '../barra-superior/barra-superior.compon
 import { ComponenteBarraLateral } from '../barra-lateral/barra-lateral.component';
 import { ComponentePainelScan } from '../painel-scan/painel-scan.component';
 import { ComponentePainelCarrinho } from '../painel-carrinho/painel-carrinho.component';
+import { ComponentePainelCatalogo } from '../painel-catalogo/painel-catalogo.component';
 import { ServicoDeteccao } from '../servicos/servico-deteccao.service';
 import { ItemCarrinhoCompra } from '../modelos/item-carrinho.model';
 import { EntradaCatalogoProduto } from '../modelos/entrada-catalogo.model';
@@ -20,7 +21,8 @@ import { EstadoCarrinhoService } from '../servicos/estado-carrinho.service';
     ComponenteBarraSuperior,
     ComponenteBarraLateral,
     ComponentePainelScan,
-    ComponentePainelCarrinho
+    ComponentePainelCarrinho,
+    ComponentePainelCatalogo
   ],
   templateUrl: './casca-app.component.html',
   styleUrls: ['./casca-app.component.scss']
@@ -30,6 +32,7 @@ export class ComponenteCascaApp implements OnInit, OnDestroy {
   private readonly servicoTitulo = inject(Title);
   private readonly estadoCarrinho = inject(EstadoCarrinhoService);
   private readonly roteador = inject(Router);
+  private readonly detectorMudancas = inject(ChangeDetectorRef);
 
   carrinhoItens: ItemCarrinhoCompra[] = [];
   itemNavegacaoAtivo = 'scan';
@@ -83,6 +86,8 @@ export class ComponenteCascaApp implements OnInit, OnDestroy {
     } else {
       this.sistemaAtivo = true;
     }
+    // Força a detecção de mudanças para atualizar a tela no primeiro clique
+    this.detectorMudancas.detectChanges();
   }
 
   lidarLimparCarrinho(): void {

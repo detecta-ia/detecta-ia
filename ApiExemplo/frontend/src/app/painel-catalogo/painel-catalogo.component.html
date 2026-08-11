@@ -1,0 +1,258 @@
+<div class="painel-catalogo-container">
+
+  <!-- Cabeçalho Superior do Módulo -->
+  <header class="cabecalho-modulo">
+    <div class="trilha-titulo">
+      <div class="linha-modulo">
+        <span class="titulo-modulo">Gestão de Inventário</span>
+        <span class="divisor-linha">|</span>
+      </div>
+      <span class="subtitulo-secao">Controle de Catálogo</span>
+      <h1 class="titulo-pagina">Catálogo de Produtos</h1>
+    </div>
+
+    <button class="botao-adicionar-produto" (click)="abrirModalNovoProduto()">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+      <span>Adicionar Novo Produto</span>
+    </button>
+  </header>
+
+  <!-- Seção de Métricas (3 Cards) -->
+  <section class="grade-metricas">
+    <!-- Card 1: Total Produtos -->
+    <div class="card-metrica card-total-produtos">
+      <div class="icone-metrica">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+          <path d="M2 17l10 5 10-5"></path>
+          <path d="M2 12l10 5 10-5"></path>
+        </svg>
+      </div>
+      <span class="rotulo-metrica">Total Produtos</span>
+      <div class="valor-metrica">{{ totalProdutosCalculado | number:'1.0-0' }}</div>
+    </div>
+
+    <!-- Card 2: Espaço reservado -->
+    <div class="card-metrica card-vazio"></div>
+
+    <!-- Card 3: Espaço reservado -->
+    <div class="card-metrica card-vazio"></div>
+  </section>
+
+  <!-- Container Principal da Tabela -->
+  <section class="card-tabela-container">
+    
+    <!-- Barra de Ferramentas / Filtro -->
+    <div class="barra-ferramentas-tabela">
+      <div class="campo-busca-wrapper">
+        <svg class="icone-busca" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          class="input-busca" 
+          placeholder="Filtrar por nome ou SKU..." 
+          [(ngModel)]="termoBusca"
+          (input)="paginaAtual = 1"
+        />
+      </div>
+
+      <div class="acoes-ferramentas">
+        <button class="botao-icone-acao" title="Filtrar" aria-label="Filtrar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+        </button>
+        <button class="botao-icone-acao" (click)="exportarCatalogo()" title="Exportar" aria-label="Exportar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabela de Produtos -->
+    <div class="wrapper-tabela-scroll">
+      <table class="tabela-produtos">
+        <thead>
+          <tr>
+            <th class="coluna-produto">Produto</th>
+            <th class="coluna-preco">Preço</th>
+            <th class="coluna-estoque">Estoque</th>
+            <th class="coluna-acoes">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (produto of produtosPaginados; track produto.id) {
+            <tr class="linha-produto">
+              
+              <!-- Coluna: Produto -->
+              <td class="coluna-produto">
+                <div class="celula-produto">
+                  <div class="container-miniatura">
+                    <img [src]="produto.urlMiniatura" [alt]="produto.nome" class="imagem-miniatura" />
+                  </div>
+                  <div class="info-produto">
+                    <h3 class="nome-produto">{{ produto.nome }}</h3>
+                    <span class="categoria-produto">{{ produto.categoria }} • {{ produto.subcategoria }}</span>
+                  </div>
+                </div>
+              </td>
+
+              <!-- Coluna: Preço -->
+              <td class="coluna-preco">
+                <span class="valor-preco">{{ produto.preco | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+              </td>
+
+              <!-- Coluna: Estoque (Badge) -->
+              <td class="coluna-estoque">
+                <span 
+                  class="badge-estoque" 
+                  [class.badge-alerta]="produto.estoqueQuantidade <= 20"
+                  [class.badge-normal]="produto.estoqueQuantidade > 20"
+                >
+                  {{ produto.estoqueQuantidade }} {{ produto.unidadeMedida }}
+                </span>
+              </td>
+
+              <!-- Coluna: Ações -->
+              <td class="coluna-acoes">
+                <button class="botao-remover" (click)="removerProduto(produto.id)" title="Remover Produto">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
+                </button>
+              </td>
+
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="4" class="sem-produtos">
+                Nenhum produto encontrado.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Rodapé de Paginação -->
+    <footer class="rodape-tabela">
+      <span class="info-contagem">
+        Mostrando {{ produtosPaginados.length }} de {{ totalProdutosCalculado | number:'1.0-0' }} produtos
+      </span>
+
+      <div class="controles-paginacao">
+        <button 
+          class="botao-paginacao" 
+          [disabled]="paginaAtual === 1" 
+          (click)="irParaPagina(paginaAtual - 1)"
+          aria-label="Página anterior"
+        >
+          &lt;
+        </button>
+
+        <button 
+          class="botao-paginacao" 
+          [class.ativo]="paginaAtual === 1" 
+          (click)="irParaPagina(1)"
+        >
+          1
+        </button>
+
+        <button 
+          class="botao-paginacao" 
+          [class.ativo]="paginaAtual === 2" 
+          (click)="irParaPagina(2)"
+        >
+          2
+        </button>
+
+        <button 
+          class="botao-paginacao" 
+          [class.ativo]="paginaAtual === 3" 
+          (click)="irParaPagina(3)"
+        >
+          3
+        </button>
+
+        <button 
+          class="botao-paginacao" 
+          [disabled]="paginaAtual >= totalPaginas" 
+          (click)="irParaPagina(paginaAtual + 1)"
+          aria-label="Próxima página"
+        >
+          &gt;
+        </button>
+      </div>
+    </footer>
+
+  </section>
+
+  <!-- Modal para Adicionar Novo Produto -->
+  @if (exibirModalNovoProduto) {
+    <div class="overlay-modal" (click)="fecharModalNovoProduto()">
+      <div class="conteudo-modal" (click)="$event.stopPropagation()">
+        
+        <header class="cabecalho-modal">
+          <h2>Adicionar Novo Produto</h2>
+          <button class="botao-fechar-modal" (click)="fecharModalNovoProduto()">&times;</button>
+        </header>
+
+        <form (ngSubmit)="salvarNovoProduto()" class="formulario-produto">
+          <div class="campo-form">
+            <label for="nome-prod">Nome do Produto</label>
+            <input id="nome-prod" type="text" [(ngModel)]="novoProduto.nome" name="nome" required placeholder="Ex: Smartwatch Elite v3" />
+          </div>
+
+          <div class="linha-form-dupla">
+            <div class="campo-form">
+              <label for="cat-prod">Categoria</label>
+              <input id="cat-prod" type="text" [(ngModel)]="novoProduto.categoria" name="categoria" required />
+            </div>
+            <div class="campo-form">
+              <label for="subcat-prod">Subcategoria</label>
+              <input id="subcat-prod" type="text" [(ngModel)]="novoProduto.subcategoria" name="subcategoria" required />
+            </div>
+          </div>
+
+          <div class="linha-form-dupla">
+            <div class="campo-form">
+              <label for="sku-prod">SKU</label>
+              <input id="sku-prod" type="text" [(ngModel)]="novoProduto.sku" name="sku" required />
+            </div>
+            <div class="campo-form">
+              <label for="preco-prod">Preço (R$)</label>
+              <input id="preco-prod" type="number" step="0.01" [(ngModel)]="novoProduto.preco" name="preco" required />
+            </div>
+          </div>
+
+          <div class="linha-form-dupla">
+            <div class="campo-form">
+              <label for="estq-prod">Quantidade em Estoque</label>
+              <input id="estq-prod" type="number" [(ngModel)]="novoProduto.estoqueQuantidade" name="estoqueQuantidade" required />
+            </div>
+            <div class="campo-form">
+              <label for="unid-prod">Unidade</label>
+              <input id="unid-prod" type="text" [(ngModel)]="novoProduto.unidadeMedida" name="unidadeMedida" required />
+            </div>
+          </div>
+
+          <footer class="rodape-modal">
+            <button type="button" class="botao-cancelar" (click)="fecharModalNovoProduto()">Cancelar</button>
+            <button type="submit" class="botao-salvar">Salvar Produto</button>
+          </footer>
+        </form>
+
+      </div>
+    </div>
+  }
+
+</div>
