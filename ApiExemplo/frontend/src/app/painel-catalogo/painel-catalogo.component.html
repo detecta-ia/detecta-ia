@@ -258,6 +258,34 @@
         </header>
 
         <form (ngSubmit)="salvarNovoProduto()" class="formulario-produto">
+          <!-- Upload de Imagem do Produto -->
+          <div class="campo-form campo-upload-imagem">
+            <label>Imagem do Produto</label>
+            <div class="container-preview-upload">
+              <div class="wrapper-preview-imagem">
+                <img [src]="novoProduto.urlMiniatura" alt="Pré-visualização da imagem do produto" class="preview-imagem-produto" />
+              </div>
+              <div class="acoes-upload-imagem">
+                <label for="upload-imagem-input" class="botao-upload-arquivo">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <span>Enviar Imagem do Computador</span>
+                </label>
+                <input 
+                  id="upload-imagem-input" 
+                  type="file" 
+                  accept="image/*" 
+                  (change)="aoSelecionarImagem($event)" 
+                  class="input-file-oculto" 
+                />
+                <span class="dica-upload">Formatos aceitos: PNG, JPG, WEBP, SVG</span>
+              </div>
+            </div>
+          </div>
+
           <div class="campo-form">
             <label for="nome-prod">Nome do Produto</label>
             <input id="nome-prod" type="text" [(ngModel)]="novoProduto.nome" name="nome" required placeholder="Ex: Smartwatch Elite v3" />

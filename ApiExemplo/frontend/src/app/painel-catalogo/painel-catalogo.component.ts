@@ -83,13 +83,17 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
     });
   }
 
+  private readonly CHAVE_LOCAL_STORAGE_IMAGENS = 'imagens_produtos_catalogo';
+
   /**
    * Converte um ProdutoListaDto (vindo da API) para ProdutoEstoque (usado na UI).
-   * Campos que não existem no backend recebem valores padrão.
+   * Campos que não existem no backend recebem valores padrão ou imagem salva localmente.
    */
   private mapearParaProdutoEstoque(dto: ProdutoListaDto): ProdutoEstoque {
     const precoBruto = dto.preco ?? (dto as any).Preco ?? 0;
     const valorPreco = typeof precoBruto === 'string' ? parseFloat(precoBruto) : Number(precoBruto);
+
+    const imagemCustomizada = dto.id ? this.obterImagemProdutoLocal(dto.id) : null;
 
     return {
       id: dto.id,
@@ -99,8 +103,60 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
       preco: isNaN(valorPreco) ? 0 : valorPreco,
       estoqueQuantidade: 0,
       unidadeMedida: 'UN',
-      urlMiniatura: 'assets/imagens/fone-headphone.png'
+      urlMiniatura: imagemCustomizada || 'assets/imagens/fone-headphone.png'
     };
+  }
+
+  /** Manipula a seleção de arquivo de imagem do computador pelo usuário. */
+  aoSelecionarImagem(evento: Event): void {
+    const elementoInput = evento.target as HTMLInputElement;
+    if (elementoInput.files && elementoInput.files[0]) {
+      const arquivo = elementoInput.files[0];
+      const leitor = new FileReader();
+
+      leitor.onload = (e: ProgressEvent<FileReader>) => {
+        if (e.target?.result) {
+          this.novoProduto.urlMiniatura = e.target.result as string;
+          this.detectorMudancas.markForCheck();
+        }
+      };
+
+      leitor.readAsDataURL(arquivo);
+    }
+  }
+
+  private obterMapaImagensLocais(): Record<string, string> {
+    try {
+      const dados = localStorage.getItem(this.CHAVE_LOCAL_STORAGE_IMAGENS);
+      return dados ? JSON.parse(dados) : {};
+    } catch {
+      return {};
+    }
+  }
+
+  private salvarImagemProdutoLocal(idProduto: string, urlImagem: string): void {
+    try {
+      const mapa = this.obterMapaImagensLocais();
+      mapa[idProduto] = urlImagem;
+      localStorage.setItem(this.CHAVE_LOCAL_STORAGE_IMAGENS, JSON.stringify(mapa));
+    } catch (erro) {
+      console.warn('[PainelCatalogo] Não foi possível salvar imagem localmente:', erro);
+    }
+  }
+
+  private obterImagemProdutoLocal(idProduto: string): string | null {
+    const mapa = this.obterMapaImagensLocais();
+    return mapa[idProduto] || null;
+  }
+
+  private removerImagemProdutoLocal(idProduto: string): void {
+    try {
+      const mapa = this.obterMapaImagensLocais();
+      delete mapa[idProduto];
+      localStorage.setItem(this.CHAVE_LOCAL_STORAGE_IMAGENS, JSON.stringify(mapa));
+    } catch {
+      // Ignora erro ao remover
+    }
   }
 
   ngOnDestroy(): void {
@@ -198,6 +254,11 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
       next: (resposta) => {
         this.carregandoSalvar = false;
 
+        // Se houver uma imagem salva no novoProduto, salva no localStorage associando ao ID criado
+        if (resposta.dados && resposta.dados.id && this.novoProduto.urlMiniatura) {
+          this.salvarImagemProdutoLocal(resposta.dados.id, this.novoProduto.urlMiniatura);
+        }
+
         // Recarrega a lista da API para garantir sincronização com o banco
         this.carregarProdutosDaApi();
 
@@ -255,7 +316,8 @@ export class ComponentePainelCatalogo implements OnInit, OnDestroy {
         this.carregandoDeletar = false;
         this.idProdutoDeletando = '';
 
-        // Remove o produto da lista local para atualização imediata na UI
+        // Remove a imagem salva do localStorage e remove o produto da lista local
+        this.removerImagemProdutoLocal(id);
         this.listaProdutos = this.listaProdutos.filter(p => p.id !== id);
 
         this.exibirToastSucesso(
