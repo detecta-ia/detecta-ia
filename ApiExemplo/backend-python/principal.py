@@ -34,6 +34,15 @@ except Exception as e:
     modelo_mouse = None
     print(f"Falha ao carregar modelo mouse.pt ({caminho_mouse}): {e}")
 
+# Carrega o modelo customizado banana_prata.pt
+caminho_banana = DIRETORIO_BASE / "banana_prata.pt"
+try:
+    modelo_banana = YOLO(str(caminho_banana))
+    print(f"Modelo banana_prata.pt carregado com classes: {modelo_banana.names}")
+except Exception as e:
+    modelo_banana = None
+    print(f"Falha ao carregar modelo banana_prata.pt ({caminho_banana}): {e}")
+
 class EntradaRequisicao(BaseModel):
   imagem: str  # Base64 string do frame
 
@@ -55,21 +64,19 @@ class RespostaDeteccaoApi(BaseModel):
 # Mapeamento de classes COCO padrão do YOLOv8 para nosso catálogo de produtos
 # Isso permite testar com objetos comuns da casa sem treinar um modelo novo:
 # - Garrafa (ID 39) -> Água Mineral Gás
-# - Maçã (ID 47) ou Laranja (ID 49) ou Banana (ID 46) -> Mirtilos Orgânicos
-# - Copo (ID 41) ou Livro (ID 73) -> Leite Integral 1L
 MAPEAMENTO_PRODUTOS_COCO = {
     0: {"id_classe": 4, "nome_classe": "pessoa_gabriel"},
-    39: {"id_classe": 2, "nome_classe": "agua_mineral_gas"},
-    47: {"id_classe": 1, "nome_classe": "mirtilos_organicos"},
-    49: {"id_classe": 1, "nome_classe": "mirtilos_organicos"},
-    46: {"id_classe": 1, "nome_classe": "mirtilos_organicos"},
-    41: {"id_classe": 0, "nome_classe": "leite_integral_1l"},
-    73: {"id_classe": 0, "nome_classe": "leite_integral_1l"}
+    39: {"id_classe": 2, "nome_classe": "agua_mineral_gas"}
 }
 
 # Mapeamento de classes do modelo mouse.pt customizado
 MAPEAMENTO_PRODUTOS_MOUSE = {
     0: {"id_classe": 3, "nome_classe": "mouse_computador"}
+}
+
+# Mapeamento de classes do modelo banana_prata.pt customizado
+MAPEAMENTO_PRODUTOS_BANANA = {
+    0: {"id_classe": 5, "nome_classe": "banana_prata"}
 }
 
 @app.post("/api/detectar", response_model=RespostaDeteccaoApi)
@@ -90,6 +97,11 @@ async def detectar_objetos(entrada: EntradaRequisicao):
         resultados_mouse = modelo_mouse(imagem, verbose=False, conf=0.20)
     else:
         resultados_mouse = []
+        
+    if modelo_banana:
+        resultados_banana = modelo_banana(imagem, verbose=False, conf=0.50)
+    else:
+        resultados_banana = []
     deteccoes_filtradas = []
 
     altura_img, largura_img, _ = imagem.shape
@@ -129,6 +141,9 @@ async def detectar_objetos(entrada: EntradaRequisicao):
 
     # Processa detecções do modelo customizado (mouse.pt)
     processar_resultados(resultados_mouse, MAPEAMENTO_PRODUTOS_MOUSE)
+
+    # Processa detecções do modelo customizado (banana_prata.pt)
+    processar_resultados(resultados_banana, MAPEAMENTO_PRODUTOS_BANANA)
 
     return RespostaDeteccaoApi(deteccoes=deteccoes_filtradas)
 

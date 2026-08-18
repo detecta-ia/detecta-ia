@@ -8,20 +8,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ServicoCatalogoProdutos {
   private readonly catalogo: Record<string, EntradaCatalogoProduto> = {
-    'leite_integral_1l': {
-      classeId: 0,
-      nomeClasse: 'leite_integral_1l',
-      nome: 'Leite Integral 1L',
-      preco: 4.50,
-      urlMiniatura: 'assets/imagens/leite.png'
-    },
-    'mirtilos_organicos': {
-      classeId: 1,
-      nomeClasse: 'mirtilos_organicos',
-      nome: 'Mirtilos Orgânicos',
-      preco: 12.90,
-      urlMiniatura: 'assets/imagens/mirtilos.png'
-    },
     'agua_mineral_gas': {
       classeId: 2,
       nomeClasse: 'agua_mineral_gas',
@@ -42,6 +28,13 @@ export class ServicoCatalogoProdutos {
       nome: 'Gabriel',
       preco: 0.00,
       urlMiniatura: 'assets/imagens/pessoa.png'
+    },
+    'banana_prata': {
+      classeId: 5,
+      nomeClasse: 'banana_prata',
+      nome: 'Banana Prata',
+      preco: 5.00,
+      urlMiniatura: 'assets/imagens/banana.png'
     }
   };
 
