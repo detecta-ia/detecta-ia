@@ -8,32 +8,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ServicoCatalogoProdutos {
   private readonly catalogo: Record<string, EntradaCatalogoProduto> = {
-    'agua_mineral_gas': {
-      classeId: 2,
-      nomeClasse: 'agua_mineral_gas',
-      nome: 'Água Mineral Gás',
-      preco: 3.25,
-      urlMiniatura: 'assets/imagens/agua.png'
-    },
-    'mouse_computador': {
-      classeId: 3,
-      nomeClasse: 'mouse_computador',
-      nome: 'Mouse de Computador',
-      preco: 49.90,
-      urlMiniatura: 'assets/imagens/mouse.png'
-    },
-    'pessoa_gabriel': {
-      classeId: 4,
-      nomeClasse: 'pessoa_gabriel',
-      nome: 'Gabriel',
-      preco: 0.00,
-      urlMiniatura: 'assets/imagens/pessoa.png'
-    },
     'banana_prata': {
       classeId: 5,
       nomeClasse: 'banana_prata',
       nome: 'Banana Prata',
       preco: 5.00,
+      urlMiniatura: 'assets/imagens/banana.png'
+    },
+    'banana_nanica': {
+      classeId: 6,
+      nomeClasse: 'banana_nanica',
+      nome: 'Banana Nanica',
+      preco: 3.00,
       urlMiniatura: 'assets/imagens/banana.png'
     }
   };
