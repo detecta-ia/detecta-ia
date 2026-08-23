@@ -2,8 +2,8 @@
 from ultralytics import YOLO
 
 def treinar():
-    # 1. Carrega o modelo base leve do YOLOv8
-    modelo = YOLO('yolov8n.pt')
+    # 1. Carrega o modelo base leve do YOLO26
+    modelo = YOLO('yolo26n.pt')
 
     # 2. Caminho para o seu arquivo data.yaml
     caminho_yaml = r"C:\Users\Aluno\Downloads\AAAA\ApiExemplo\backend\src\BaseApi.Infrastructure\dataset\data.yaml"

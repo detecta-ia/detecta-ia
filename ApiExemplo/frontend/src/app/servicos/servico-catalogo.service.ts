@@ -15,12 +15,19 @@ export class ServicoCatalogoProdutos {
       preco: 5.00,
       urlMiniatura: 'assets/imagens/banana.png'
     },
-    'banana_nanica': {
-      classeId: 6,
-      nomeClasse: 'banana_nanica',
-      nome: 'Banana Nanica',
-      preco: 3.00,
+    'banana_da_terra': {
+      classeId: 7,
+      nomeClasse: 'banana_da_terra',
+      nome: 'Banana da Terra',
+      preco: 6.50,
       urlMiniatura: 'assets/imagens/banana.png'
+    },
+    'mouse': {
+      classeId: 8,
+      nomeClasse: 'mouse',
+      nome: 'Mouse Óptico',
+      preco: 45.00,
+      urlMiniatura: 'assets/imagens/mouse.png'
     }
   };
 
