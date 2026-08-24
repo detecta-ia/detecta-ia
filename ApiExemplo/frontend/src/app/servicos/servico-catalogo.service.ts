@@ -13,14 +13,14 @@ export class ServicoCatalogoProdutos {
       nomeClasse: 'banana_prata',
       nome: 'Banana Prata',
       preco: 5.00,
-      urlMiniatura: 'assets/imagens/banana.png'
+      urlMiniatura: 'assets/imagens/banana-prata.jpg'
     },
     'banana_da_terra': {
       classeId: 7,
       nomeClasse: 'banana_da_terra',
       nome: 'Banana da Terra',
       preco: 6.50,
-      urlMiniatura: 'assets/imagens/banana.png'
+      urlMiniatura: 'assets/imagens/banana-da-terra.jpg'
     },
     'mouse': {
       classeId: 8,
