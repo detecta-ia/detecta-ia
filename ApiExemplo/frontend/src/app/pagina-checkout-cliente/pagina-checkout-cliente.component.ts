@@ -22,6 +22,8 @@ export class PaginaCheckoutClienteComponent implements OnInit {
   erroPagamento: string | null = null;
   pagamentoConcluido = false;
   formaPagamentoEscolhida: number | null = null;
+  valorTotalPago = 0;
+  idTransacaoConfirmada = '';
 
   modoDemonstracao = false;
   conexaoServidor = true;
@@ -81,6 +83,8 @@ export class PaginaCheckoutClienteComponent implements OnInit {
     this.processandoPagamento = true;
     this.erroPagamento = null;
     this.formaPagamentoEscolhida = formaPagamentoId;
+    this.valorTotalPago = this.calcularTotalPagar();
+    this.idTransacaoConfirmada = this.gerarIdTransacao();
 
     if (this.modoDemonstracao) {
       setTimeout(() => {
@@ -116,6 +120,8 @@ export class PaginaCheckoutClienteComponent implements OnInit {
     this.pagamentoConcluido = false;
     this.formaPagamentoEscolhida = null;
     this.erroPagamento = null;
+    this.valorTotalPago = 0;
+    this.idTransacaoConfirmada = '';
     this.estadoCarrinho.limpar();
     this.obterRevisaoCarrinho();
   }
